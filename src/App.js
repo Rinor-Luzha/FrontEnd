@@ -1,14 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { urlName } from './endpoints';
+import Footer from './Components/Footer';
 import Header from './header';
 
 function App() {
   return (
-    <div className="container">
-      <Header/>
-    </div>
+    <div className="page-container">
+      <div className="content-wrap">
+        <div className='container'>
+        <Header/>
+        </div>
+      </div>
+    <Footer />
+  </div>
   )
 }
 
