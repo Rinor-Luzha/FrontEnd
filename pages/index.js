@@ -1,5 +1,12 @@
 import Slide from '../components/slides/BigSlide'
 import AliceCarousel from 'react-alice-carousel';
+import Head from 'next/head'
+import Image from 'next/image'
+import styles from '../styles/Home.module.css'
+import Footer from '../components/Footer'
+import MainSlider from '../components/sliders/main/MainSlider'
+import Actors from '../components/ActorList'
+import ListItem from '../components/ListItem'
 
 export const getStaticProps = async () => {
   const res = await fetch('http://localhost:39249/home/new');
@@ -47,6 +54,12 @@ export default function Home({ movieList }) {
           )
         }
       </AliceCarousel>
+      <div>
+        <ListItem />
+        <MainSlider />
+        <Footer />
+      </div>
     </>
+
   )
 }
