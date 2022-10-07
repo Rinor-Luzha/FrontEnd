@@ -1,23 +1,22 @@
 import React from "react";
-import "./Footer.css";
 
 function Footer() {
   return (
     <div className="main-footer">
       <div className="container">
         <div className="row">
-        
-         <h1>Elefanti Ratings</h1>
-        
+
+          <h1>Elefanti Ratings</h1>
+
           <div className="col">
-          {/* Column1 */}
+            {/* Column1 */}
             <h4>FIND US ON</h4>
             <ul className="list-unstyled">
               <li>Facebook</li>
               <li>Twitter</li>
               <li>Instagram</li>
             </ul>
-          {/* Column2 */}
+            {/* Column2 */}
             <h4>RESOURCES</h4>
             <ul className="list-unstyled">
               <li>Support</li>
