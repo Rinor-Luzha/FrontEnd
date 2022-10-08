@@ -19,7 +19,7 @@ export default function Login() {
                         </div>
                         <div className="py-10">
                             <h2 className="text-3xl font-bold text-red mb-1">Log In to your Account</h2>
-                            <div className="border-2 w-14 border-red inline-block mb-2"></div>
+                            <div className="border-t-2 w-14 border-t-red inline-block mb-2"></div>
                         </div>
                         <div className="flex flex-col items-center m-0">
                             <div className="bg-lightgrey rounded-lg w-72 p-2 flex items-center m-0"><FaRegEnvelope className='text-grey m-2' />
@@ -38,9 +38,9 @@ export default function Login() {
 
                     <div className="w-2/5 bg-red text-white rounded-tr-2xl rounded-br-2xl py-36 px-12">
                         <h2 className="text-3xl font-bold mb-2">First time here?</h2>
-                        <div className="border-2 w-14 border-white inline-block mb-2"></div>
+                        <div className="border-t-2 w-14 border-white inline-block mb-2"></div>
                         <p className="mb-10">Fill up personal information and start rating with us.</p>
-                        <Link a href='/Register'>
+                        <Link a href='/register'>
                             <a href="#" className="border-2 border-white rounded-full px-12 py-2 inline-block text-white font-semibold  hover:bg-white hover:text-red">Register</a>
                         </Link>
                     </div>
