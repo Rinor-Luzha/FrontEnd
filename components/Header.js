@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 export default function Header() {
 
-  const [ isActive, SetActive ] = useState("false")
+  const [isActive, setIsActive] = useState(false)
 
-  const toggleMenu = () => {
-    SetActive(!isActive)
-  }
+  const [ count, setCount ] = useState(0)
+  
+  useEffect
 
   return (
     <>
@@ -35,9 +35,9 @@ function MenuButton(){
 
 function SearchBar(){
   return(
-    <div className=" text-gray-600 justify-items-center">
+    <div className="text-gray-600">
       <input type="search" name="serch" placeholder="Search..." className="relative bg-gray-200 h-10 py-1 w-6/7 px-1 ml-0 pl-5 mr-1 rounded-full text-sm focus:outline-none"></input>
-      <button type="submit" class="absolute top-0.5 mt-3 h-7 w-7 bg-[url('/public/searchicon.png')] bg-contain bg-no-repeat bg-right">
+      <button type="submit" class="absolute top-0.5 mt-3 h-7 w-7 bg-[url('../public/searchicon.png')] bg-contain bg-no-repeat bg-right">
     
       </button>
     </div>
@@ -47,7 +47,9 @@ function SearchBar(){
 function Logo(){
   return(
     <button className='absolute right-1'>
-      <div className="bg-contain bg-[url('/public/logo.png')] bg-no-repeat h-8 w-10"></div>
-      </button>
+      <div className="bg-contain bg-[url('../public/favicon.ico')] bg-no-repeat h-8 w-10"></div>
+    </button>
   )
 }
+
+
