@@ -32,20 +32,6 @@ a {
 }
 
 /* Alice carousel slider */
-.alice-carousel__prev-btn {
-  position: relative;
-  bottom: 65px;
-  right: 310px;
-}
-
-.alice-carousel__next-btn {
-  position: relative;
-  bottom: 62px;
-  left: 310px;
-  display: inline
-}
-
-
 .alice-carousel__dots-item {
   background-color: #aaacb1 !important
 }

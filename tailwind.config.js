@@ -21,7 +21,7 @@ module.exports = {
       '2xl': '1536px',
       // => @media (min-width: 1536px) { ... }
     },
-    
+
     extend: {
       spacing: {
         '104': '28rem',
@@ -31,7 +31,9 @@ module.exports = {
       'red': '#e20100',
       'white': '#FFFFFF',
       'black': '#191818',
-      'grey': '#aaacb1'
+      'grey': '#aaacb1',
+      'lightgrey': '#ededee',
+      'darkgrey': '#333131'
     },
     fontWeight: {
       fontWeight: {
