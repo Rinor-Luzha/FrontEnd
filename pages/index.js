@@ -1,12 +1,6 @@
 import BigSlide from '../components/slides/BigSlide'
 import AliceCarousel from 'react-alice-carousel';
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import Footer from '../components/Footer'
-import MainSlider from '../components/sliders/main/MainSlider'
-import Actors from '../components/ActorList'
-import ListItem from '../components/ListItem'
+import Movies from '../components/Movies'
 
 export const getStaticProps = async () => {
 
@@ -66,7 +60,7 @@ export const getStaticProps = async () => {
 
 
 export default function Home({ newMoviesList, ratedMoviesList, recommendedMoviesList, highestRatedMoviesList }) {
-
+  console.log(highestRatedMoviesList)
   return (
     <>
       {/* Main slider */}
@@ -176,9 +170,7 @@ export default function Home({ newMoviesList, ratedMoviesList, recommendedMovies
         }
       </AliceCarousel>
       <div>
-        <ListItem />
-        <MainSlider />
-        <Footer />
+        <Movies movies={highestRatedMoviesList} />
       </div>
     </>
   )
