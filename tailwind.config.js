@@ -31,7 +31,8 @@ module.exports = {
       'red': '#e20100',
       'white': '#FFFFFF',
       'black': '#191818',
-      'grey': '#aaacb1'
+      'grey': '#aaacb1',
+      'lightgray':'#f2f2f2'
     },
     fontWeight: {
       fontWeight: {
