@@ -1,6 +1,5 @@
 import React from 'react'
 export const BigSlide = (props) => {
-    console.log(props);
     return (
         <div className="h-104 hover:cursor-pointer w-fit mx-auto hover:scale-[1.02] transition-all duration-500">
             <img src={props.img} alt={props.title} className="absolute mix-blend-soft-light h-104 w-80" />
