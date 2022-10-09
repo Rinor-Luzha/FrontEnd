@@ -3,7 +3,8 @@ import AliceCarousel from 'react-alice-carousel';
 import Movies from '../components/Movies'
 import { useState, useEffect } from 'react'
 import ResponsiveCarousel from '../components/ResponsiveCarousel';
-
+import Rating from '../components/Rating';
+import Footer from '../components/Footer';
 export const getStaticProps = async () => {
 
   // New movies
@@ -33,8 +34,17 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
   const [ratedMovies, setRatedMovies] = useState([]);
   const [recommendedMovies, setRecommendedMovies] = useState([]);
 
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
 
+  const [showRatingPopup, setShowRatingPopup] = useState(false);
+
+  const [clickedMovie, setClickedMovie] = useState(null);
+
+
+  const toggleRatingPopup = (id) => {
+    setClickedMovie(id)
+    setShowRatingPopup(!showRatingPopup)
+  }
 
   useEffect(() => {
     setDomLoaded(true)
@@ -46,10 +56,9 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
       credentials: 'include'
     }).then(user => user.json())
       .then(userData => {
-        if (userData.id !== 'undefined') {
-          setLoggedIn(true);
+        if (userData.status !== 401) {
+          setUserId(userData.id);
           // Get recommended movies
-          console.log(userData.id)
           fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
             .then(movieData => {
               setRecommendedMovies(movieData)
@@ -118,7 +127,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
             <h2 className="text-3xl font-bold mb-1">Movies you have rated</h2>
             <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
           </div>
-          <ResponsiveCarousel movies={ratedMovies} />
+          <ResponsiveCarousel onClick={toggleRatingPopup} movies={ratedMovies} />
         </div> : ""
       }
 
@@ -129,11 +138,15 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           <h2 className="text-3xl font-bold mb-1">Recommended movies for you</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
-        {domLoaded ? (loggedIn ?
-          <ResponsiveCarousel movies={staticRecommended} /> :
-          <ResponsiveCarousel movies={recommendedMovies} />
+        {domLoaded ? (userId !== null ?
+          <ResponsiveCarousel onClick={toggleRatingPopup} movies={staticRecommended} />
+          :
+          <ResponsiveCarousel onClick={toggleRatingPopup} movies={recommendedMovies} />
         ) : ""}
       </div>
+      {showRatingPopup &&
+        <Rating close={toggleRatingPopup} movieId={clickedMovie} userId={userId} />
+      }
 
       <div>
         <Movies movies={highestRatedMoviesList} />

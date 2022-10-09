@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
+import Rating from '../Rating';
+
 const Slide = (props) => {
     const tags = props.genres.map((genre, index) => {
         return <span key={index} className="select-none text-xs rounded-xl w-fit h-fit m-1 px-1 cursor-default bg-opacity-80 text-grey hover:bg-red hover:text-white border border-lightgrey transition-all duration-300">{genre}</span>
@@ -27,7 +29,8 @@ const Slide = (props) => {
     } else {
         ratingImg = "/ratings/100.png";
     }
-    return (
+
+    return (<>
         <div className="border mx-2 border-lightgrey items-center group border-md my-10 text-center relative pr-2 transition-all hover:shadow-sm duration-300">
             <div className="text-center m-2">{tags}</div>
 
@@ -44,9 +47,9 @@ const Slide = (props) => {
             </div>
             <ul className="absolute opacity-0 invisible flex items-center justify-evenly top-1/2 left-1/2 w-36 h-16 bg-black bg-opacity-50 translate-x-[-50%] translate-y-[-50%] scale-75 transition-all duration-500  group-hover:visible group-hover:translate-x-[-50%] group-hover:translate-y-[-50%] group-hover:scale-100 group-hover:opacity-100">
                 <li>
-                    <Link href="/" >
+                    <button onClick={() => props.onClick(props.movieId)} >
                         <i className="text-white relative flex items-center justify-center w-12 h-12 cursor-pointer trasition-all duration-500 rounded-tl-xl rounded-br-xl rounded-tr-md rounded-bl-lg hover:bg-black hover:bg-opacity-80 hover:scale-110 fas fa-star"></i>
-                    </Link>
+                    </button>
                 </li>
                 <li>
                     <Link href="/" >
@@ -55,6 +58,8 @@ const Slide = (props) => {
                 </li>
             </ul>
         </div>
+    </>
+
     )
 }
 

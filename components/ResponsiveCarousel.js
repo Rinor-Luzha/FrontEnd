@@ -1,7 +1,7 @@
 import React from 'react'
 import AliceCarousel from 'react-alice-carousel';
 import Slide from './slides/Slide'
-const ResponsiveCarousel = ({ movies }) => {
+const ResponsiveCarousel = ({ movies, onClick }) => {
     return (
         <AliceCarousel duration={500}
             responsive={{
@@ -29,6 +29,8 @@ const ResponsiveCarousel = ({ movies }) => {
             {
                 movies.map(movie => {
                     return <Slide
+                        movieId={movie.id}
+                        onClick={onClick}
                         title={movie.title}
                         genres={movie.genres}
                         img={movie.img.substring(1)}
