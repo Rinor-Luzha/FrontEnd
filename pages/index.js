@@ -163,6 +163,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
       {showRatingPopup &&
         <Rating close={toggleRatingPopup} movieId={clickedMovie} userId={userId} />
       }
+      <Footer />
     </>
   )
 } 
