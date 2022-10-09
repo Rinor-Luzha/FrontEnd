@@ -57,7 +57,7 @@ const Rating = (props) => {
                                     />
                                     <Icon icon="mdi:elephant"
                                         width={65}
-                                        className="start:w-9 md:w-12 lg:w-16 hover:cursor-pointer transition-all duration-200"
+                                        className="xs:w-9 md:w-12 lg:w-16 hover:cursor-pointer transition-all duration-200"
                                         color={ratingNumber <= (hover || rating) ? "#e20100" : "#ffffff"}
                                         onMouseEnter={() => setHover(ratingNumber)}
                                         onMouseLeave={() => setHover(null)}

@@ -21,10 +21,10 @@ const ResponsiveCarousel = ({ movies, onClick }) => {
             touchTracking={true}
             autoPlayActionDisabled={true}
             renderPrevButton={() => {
-                return <p className="select-none absolute bottom-60 left-4 px-[12px] pt-[3px]  text-grey rounded-full border-2 border-grey text-4xl hover:cursor-pointer hover:bg-red hover:shadow-md hover:text-white hover:border-white transition-all font-bold">&lt;</p>
+                return <p className="select-none absolute bottom-60 left-4 px-[12px] pt-[3px]  text-grey rounded-full border-2 border-grey text-4xl hover:cursor-pointer hover:bg-red hover:shadow-md hover:text-white hover:border-white transition-all">&lt;</p>
             }}
             renderNextButton={() => {
-                return <p className="select-none absolute bottom-60 right-4 px-[12px] pt-[3px]  text-grey rounded-full border-2 border-grey text-4xl hover:cursor-pointer hover:bg-red hover:shadow-md hover:text-white hover:border-white transition-all font-bold">&gt;</p>
+                return <p className="select-none absolute bottom-60 right-4 px-[12px] pt-[3px]  text-grey rounded-full border-2 border-grey text-4xl hover:cursor-pointer hover:bg-red hover:shadow-md hover:text-white hover:border-white transition-all ">&gt;</p>
             }}>
             {
                 movies.map(movie => {

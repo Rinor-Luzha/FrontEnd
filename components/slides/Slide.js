@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
-import Rating from '../Rating';
 
 const Slide = (props) => {
     const tags = props.genres.map((genre, index) => {

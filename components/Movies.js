@@ -4,7 +4,7 @@ import ListItem from './ListItem.js'
 
 export default function Movies({ movies }) {
     return (
-        <div className="divide-y divide-slate-100">
+        <div className="flex justify-center align-center">
             <List>
                 {movies.map((movie) => (
                     <ListItem key={movie.id} movie={movie} />

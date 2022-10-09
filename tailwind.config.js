@@ -6,7 +6,7 @@ module.exports = {
   ],
   theme: {
     screens: {
-      'start': '0px',
+      'xs': '300px',
       'sm': '640px',
       // => @media (min-width: 640px) { ... }
 
@@ -37,12 +37,10 @@ module.exports = {
       'darkgrey': '#333131'
     },
     fontWeight: {
-      fontWeight: {
-        normal: 400,
-        medium: 500,
-        semibold: 600,
-        bold: 900,
-      }
+      'normal': 400,
+      'medium': 500,
+      'semibold': 600,
+      'bold': 900,
     }
   },
   plugins: [],

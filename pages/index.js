@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import ResponsiveCarousel from '../components/ResponsiveCarousel';
 import Rating from '../components/Rating';
 import Footer from '../components/Footer';
+
 export const getStaticProps = async () => {
 
   // New movies
@@ -42,6 +43,16 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
 
 
   const toggleRatingPopup = (id) => {
+    if (userId === null) {
+      swal({
+        title: "Please log in first!",
+        text: "You need to be logged in to do that!",
+        icon: "warning",
+        timer: 2000,
+        buttons: false
+      });
+      return
+    }
     setClickedMovie(id)
     setShowRatingPopup(!showRatingPopup)
   }
@@ -71,14 +82,13 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
             })
         }
       })
-    console.log("e ndrrova")
   }, [showRatingPopup]);
   return (
     <>
       {/* Main slider */}
       <div className='py-5'>
         <div className="my-5 flex flex-col items-center">
-          <h2 className="text-3xl font-bold mb-1 text-center">New Movies</h2>
+          <h2 className="text-3xl mb-1 text-center">New Movies</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
         <div className="w-full m-0 p-0 h-104 bg-black absolute shadow-xl"></div>
@@ -93,11 +103,11 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           touchTracking={true}
           autoPlayActionDisabled={true}
           renderPrevButton={() => {
-            return <p className="select-none ml-auto w-fit px-[12px] pt-[3px]  text-grey rounded-full border-2 border-grey text-4xl hover:cursor-pointer hover:bg-red hover:shadow-md hover:text-white hover:border-white transition-all font-bold">&lt;</p>
+            return <p className="select-none ml-auto w-fit px-[12px] pt-[3px]  text-grey rounded-full border-2 border-grey text-4xl hover:cursor-pointer hover:bg-red hover:shadow-md hover:text-white hover:border-white transition-all">&lt;</p>
 
           }}
           renderNextButton={() => {
-            return <p className="select-none mr-auto w-fit px-[12px] pt-[3px]  text-grey rounded-full border-2 border-grey text-4xl hover:cursor-pointer hover:bg-red hover:shadow-md hover:text-white hover:border-white transition-all font-bold">&gt;</p>
+            return <p className="select-none mr-auto w-fit px-[12px] pt-[3px]  text-grey rounded-full border-2 border-grey text-4xl hover:cursor-pointer hover:bg-red hover:shadow-md hover:text-white hover:border-white transition-all">&gt;</p>
 
           }}>
           {
@@ -123,7 +133,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
       {ratedMovies.length !== 0 && domLoaded ?
         <div className="py-5 shadow-sm">
           <div className="flex flex-col items-center">
-            <h2 className="text-3xl font-bold mb-1 text-center">Movies you have rated</h2>
+            <h2 className="text-3xl mb-1 text-center">Movies you have rated</h2>
             <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
           </div>
           <ResponsiveCarousel onClick={toggleRatingPopup} movies={ratedMovies} />
@@ -132,9 +142,9 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
 
       {/* Recommended movies */}
 
-      <div className="py-5 border-t border-lightgrey shadow-sm">
+      <div className="py-5">
         <div className="flex flex-col items-center">
-          <h2 className="text-3xl font-bold mb-1 text-center">Recommended movies for you</h2>
+          <h2 className="text-3xl mb-1 text-center">Recommended movies for you</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
         {domLoaded ? (userId === null ?
@@ -143,13 +153,16 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           <ResponsiveCarousel onClick={toggleRatingPopup} movies={recommendedMovies} />
         ) : ""}
       </div>
+      <div className="py-5">
+        <div className="flex flex-col items-center">
+          <h2 className="text-3xl mb-1 text-center">Top 10 highest rated movies</h2>
+          <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
+        </div>
+        <Movies movies={highestRatedMoviesList.slice(0, 10)} />
+      </div>
       {showRatingPopup &&
         <Rating close={toggleRatingPopup} movieId={clickedMovie} userId={userId} />
       }
-
-      <div>
-        <Movies movies={highestRatedMoviesList} />
-      </div>
     </>
   )
 } 
