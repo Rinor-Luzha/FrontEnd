@@ -71,15 +71,14 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
             })
         }
       })
-  }, []);
-
-
+    console.log("e ndrrova")
+  }, [showRatingPopup]);
   return (
     <>
       {/* Main slider */}
       <div className='py-5'>
         <div className="my-5 flex flex-col items-center">
-          <h2 className="text-3xl font-bold mb-1">New Movies</h2>
+          <h2 className="text-3xl font-bold mb-1 text-center">New Movies</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
         <div className="w-full m-0 p-0 h-104 bg-black absolute shadow-xl"></div>
@@ -124,7 +123,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
       {ratedMovies.length !== 0 && domLoaded ?
         <div className="py-5 shadow-sm">
           <div className="flex flex-col items-center">
-            <h2 className="text-3xl font-bold mb-1">Movies you have rated</h2>
+            <h2 className="text-3xl font-bold mb-1 text-center">Movies you have rated</h2>
             <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
           </div>
           <ResponsiveCarousel onClick={toggleRatingPopup} movies={ratedMovies} />
@@ -135,10 +134,10 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
 
       <div className="py-5 border-t border-lightgrey shadow-sm">
         <div className="flex flex-col items-center">
-          <h2 className="text-3xl font-bold mb-1">Recommended movies for you</h2>
+          <h2 className="text-3xl font-bold mb-1 text-center">Recommended movies for you</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
-        {domLoaded ? (userId !== null ?
+        {domLoaded ? (userId === null ?
           <ResponsiveCarousel onClick={toggleRatingPopup} movies={staticRecommended} />
           :
           <ResponsiveCarousel onClick={toggleRatingPopup} movies={recommendedMovies} />

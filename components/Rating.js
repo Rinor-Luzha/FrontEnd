@@ -1,57 +1,49 @@
-import React, { useState } from 'react'
-import { FaStar } from "react-icons/fa"
+import React, { useEffect, useState } from 'react'
+import swal from 'sweetalert';
+import { Icon } from '@iconify/react';
+
 const Rating = (props) => {
     const [rating, setRating] = useState(null)
     const [hover, setHover] = useState(null)
-    const rateMovie = (ratingNumber) => {
-        setRating(ratingNumber)
-        const ratingId = fetch('http://localhost:39249/movie/rating?' + new URLSearchParams({
-            movieid: props.movieId,
-            userid: props.userId,
-        })).then(user => user.json()).then(userData => {
-            if (userData.status !== 404) {
-                return userData
-            } else {
-                return -1;
-            }
+
+    const saveRating = async (ratingNumber) => {
+        const res = await fetch('http://localhost:39249/movie/rating', {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify({ movieId: props.movieId, userId: props.userId, rating: ratingNumber })
         })
-        if (ratingId !== -1) {
-            const resMovieRate = fetch('http://localhost:39249/movie/ratings', {
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include',
-                body: JSON.stringify({ movieid: props.movieId, userid: props.userId, rating: 5 })
+        if (res.status === 201) {
+            swal({
+                title: "Good job!",
+                text: "Rating created!",
+                icon: "success",
+                timer: 1500,
+                buttons: false
             });
-            if (resMovieRate.ok) {
-                props.close
-            } else {
-                console.log("Error posting rating")
-            }
+
+        } else if (res.status === 200) {
+            swal({
+                title: "Good job!",
+                text: "Rating updated!",
+                icon: "success",
+                timer: 1500,
+                buttons: false
+            });
         } else {
-            const resMovieRate = fetch('http://localhost:39249/movie/ratings?', {
-                method: "PUT",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include',
-                body: JSON.stringify({ ratingid: ratingId, rating: 5 })
-            });
-            if (resMovieRate.ok) {
-                props.close
-            } else {
-                console.log("Error updating rating")
-            }
+            swal("Error!", "There was an error while rating the movie!", "error");
         }
+        props.close();
     }
+
     return (
         <div className="w-screen h-screen flex justify-center items-center fixed top-0 left-0 bottom-0 right-0">
-            <div className="w-screen h-screen bg-black opacity-80 flex flex-col fixed justify-center items-center">
-                <div className="w-fit h-fit bg-grey rounded-lg">
-                    <div className="h-1 text-sm text-right pr-2 hover:text-red hover:cursor-pointer"><i onClick={props.close} className="fas fa-close"></i></div>
+            <div className="w-screen h-screen bg-black opacity-80 flex flex-col fixed justify-center items-center" onClick={props.close}>
+                <div className="w-fit h-16 lg:h-fit bg-grey rounded-lg">
+                    <div className="h-0 md:text-lg lg:text-xl text-sm text-right pr-2 hover:text-red hover:cursor-pointer"><i onClick={props.close} className="fas fa-close"></i></div>
                     <ul className="h-fit w-fit p-2 flex justify-evenly">
                         {[...Array(10)].map((star, i) => {
                             const ratingNumber = i + 1
@@ -62,15 +54,17 @@ const Rating = (props) => {
                                         type="radio"
                                         name="rating"
                                         value={ratingNumber}
-                                        onClick={rateMovie}
                                     />
-                                    <FaStar
-                                        className="hover:cursor-pointer"
+                                    <Icon icon="mdi:elephant"
+                                        width={65}
+                                        className="start:w-9 md:w-12 lg:w-16 hover:cursor-pointer transition-all duration-200"
                                         color={ratingNumber <= (hover || rating) ? "#e20100" : "#ffffff"}
-                                        size={50}
                                         onMouseEnter={() => setHover(ratingNumber)}
-                                        onMouseLeave={() => setRating(null)}
-                                        onClick={rateMovie}
+                                        onMouseLeave={() => setHover(null)}
+                                        onClick={() => {
+                                            setRating(ratingNumber)
+                                            saveRating(ratingNumber)
+                                        }}
                                     />
                                 </label>
                             )

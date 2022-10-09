@@ -4,6 +4,8 @@ import { MdLockOutline } from 'react-icons/md'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
+import swal from 'sweetalert';
+
 
 export default function Login() {
     const [email, setEmail] = useState("")
@@ -32,6 +34,13 @@ export default function Login() {
 
         if (userLogin.message === "Success") {
             router.push('/')
+            swal({
+                title: "Good job!",
+                text: "Logged in!",
+                icon: "success",
+                timer: 1500,
+                buttons: false
+            });
         } else {
             setEmail("")
             setPassword("")

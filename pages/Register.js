@@ -46,6 +46,13 @@ export default function Register() {
 
         if (resUserRegister.id !== "undefined") {
             router.push('/login')
+            swal({
+                title: "Good job!",
+                text: "Registered!",
+                icon: "success",
+                timer: 1500,
+                buttons: false
+            });
         } else {
             setName("")
             setSurname("")
