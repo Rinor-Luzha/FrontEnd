@@ -29,9 +29,8 @@ function Footer() {
           <p className="col-sm">
             &copy;{new Date().getFullYear()} Elefanti Ratings | All rights reserved | Terms Of Service | Privacy
           </p>
-          <button class="button button1">Green</button>
-          <button class="button button2">Blue</button>
         </div>
+        <div></div>
       </div>
     </div>
   );
