@@ -10,63 +10,60 @@ export const getStaticProps = async () => {
   const resNew = await fetch('http://localhost:39249/home/new');
   const newMovies = await resNew.json();
 
-  //Check if user is logged in
-  const resUserAuth = await fetch('http://localhost:39249/account/user', {
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    credentials: 'include'
-  });
-  const userAuth = await resUserAuth.json();
+  // Generate recommended movies in case user is not logged in
+  const recommendedRes = await fetch('http://localhost:39249/home/recommended');
+  const recommendedMovies = await recommendedRes.json();
 
-  // if user logged in show the movies he has rated and a list of recommended movies for him
-  if (userAuth.status !== 401) {
-    const ratedRes = await fetch('http://localhost:39249/home/rated/?id=' + userAuth.id);
-    const ratedMovies = await ratedRes.json();
+  const highestRes = await fetch('http://localhost:39249/home/highest');
+  const highestList = await highestRes.json();
 
-    const recommendedRes = await fetch('http://localhost:39249/home/rated/?id=' + userAuth.id);
-    const recommendedMovies = await recommendedRes.json();
-
-    const highestRes = await fetch('http://localhost:39249/home/highest');
-    const highestList = await highestRes.json();
-
-    return {
-      props: {
-        newMoviesList: newMovies,
-        ratedMoviesList: ratedMovies,
-        recommendedMoviesList: recommendedMovies,
-        highestRatedMoviesList: highestList
-      }
-    }
-  } else {
-    //else generate random recommended movies
-    const ratedMovies = new Array();
-
-    const recommendedRes = await fetch('http://localhost:39249/home/recommended');
-    const recommendedMovies = await recommendedRes.json();
-
-
-    const highestRes = await fetch('http://localhost:39249/home/highest');
-    const highestList = await highestRes.json();
-    return {
-      props: {
-        newMoviesList: newMovies,
-        ratedMoviesList: ratedMovies,
-        recommendedMoviesList: recommendedMovies,
-        highestRatedMoviesList: highestList
-      }
+  return {
+    props: {
+      newMoviesList: newMovies,
+      staticRecommended: recommendedMovies,
+      highestRatedMoviesList: highestList
     }
   }
 }
 
 
-export default function Home({ newMoviesList, ratedMoviesList, recommendedMoviesList, highestRatedMoviesList }) {
+export default function Home({ newMoviesList, staticRecommended, highestRatedMoviesList }) {
   const [domLoaded, setDomLoaded] = useState(false);
 
+  const [ratedMovies, setRatedMovies] = useState([]);
+  const [recommendedMovies, setRecommendedMovies] = useState([]);
+
+  const [loggedIn, setLoggedIn] = useState(false);
+
+
   useEffect(() => {
-    setDomLoaded(true);
+    setDomLoaded(true)
+    fetch('http://localhost:39249/account/user', {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    }).then(user => user.json())
+      .then(userData => {
+        if (userData.id !== 'undefined') {
+          setLoggedIn(true);
+          // Get recommended movies
+          console.log(userData.id)
+          fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
+            .then(movieData => {
+              setRecommendedMovies(movieData)
+            })
+
+          // Get rated movies
+          fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
+            .then(movieData => {
+              setRatedMovies(movieData)
+            })
+        }
+      })
   }, []);
+
 
   return (
     <>
@@ -112,27 +109,32 @@ export default function Home({ newMoviesList, ratedMoviesList, recommendedMovies
           }
         </AliceCarousel>
       </div>
+
       {/* Rated movies */}
 
-      {ratedMoviesList.length !== 0 && domLoaded ?
+      {ratedMovies.length !== 0 && domLoaded ?
         <div className="py-5 shadow-sm">
           <div className="flex flex-col items-center">
             <h2 className="text-3xl font-bold mb-1">Movies you have rated</h2>
             <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
           </div>
-          <ResponsiveCarousel movies={ratedMoviesList} />
+          <ResponsiveCarousel movies={ratedMovies} />
         </div> : ""
       }
 
       {/* Recommended movies */}
-      {domLoaded ?
-        <div className="py-5 border-t border-lightgrey shadow-sm">
-          <div className="flex flex-col items-center">
-            <h2 className="text-3xl font-bold mb-1">Recommended movies for you</h2>
-            <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
-          </div>
-          <ResponsiveCarousel movies={recommendedMoviesList} />
-        </div> : ""}
+
+      <div className="py-5 border-t border-lightgrey shadow-sm">
+        <div className="flex flex-col items-center">
+          <h2 className="text-3xl font-bold mb-1">Recommended movies for you</h2>
+          <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
+        </div>
+        {domLoaded ? (loggedIn ?
+          <ResponsiveCarousel movies={staticRecommended} /> :
+          <ResponsiveCarousel movies={recommendedMovies} />
+        ) : ""}
+      </div>
+
       <div>
         <Movies movies={highestRatedMoviesList} />
       </div>
