@@ -21,39 +21,45 @@ export default function Login() {
 
     const login = async (e) => {
         e.preventDefault();
-        const resUserLogin = await fetch('http://localhost:39249/account/login', {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: JSON.stringify({ email, password })
-        });
-        const userLogin = await resUserLogin.json();
-
-        if (userLogin.message === "Success") {
-            router.push('/')
-            swal({
-                title: "Good job!",
-                text: "Logged in!",
-                icon: "success",
-                timer: 1500,
-                buttons: false
+        try {
+            const resUserLogin = await fetch('http://localhost:39249/account/login', {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({ email, password })
             });
-        } else {
-            setEmail("")
-            setPassword("")
-            setFail(true)
+            if (!resUserLogin.ok) {
+                throw new Error("Error while logging in!")
+            }
+            const userLogin = await resUserLogin.json();
+
+            if (userLogin.message === "Success") {
+                router.push('/')
+                swal({
+                    title: "Good job!",
+                    text: "Logged in!",
+                    icon: "success",
+                    timer: 1500,
+                    buttons: false
+                });
+            } else {
+                setEmail("")
+                setPassword("")
+                setFail(true)
+            }
+
+            const emailInput = document.getElementById('email');
+            const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+            if (!emailInput.value.match(emailRegex)) {
+                alert('Invalid email address.');
+            }
+        } catch (error) {
+            console.log(error)
         }
-
-        const emailInput = document.getElementById('email');
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
-        if (!emailInput.value.match(emailRegex)) {
-            alert('Invalid email address.');
-        }
-
     }
     return (
         <div className="flex flex-col items-center justify-center w-screen h-screen flex-1 px-20 text-center bg-white">

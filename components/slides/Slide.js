@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
+import swal from 'sweetalert';
+
 
 const Slide = (props) => {
     const tags = props.genres.map((genre, index) => {
@@ -30,29 +32,37 @@ const Slide = (props) => {
     }
 
     const removeRating = async () => {
-        const res = await fetch('http://localhost:39249/movie/rating', {
-            method: "DELETE",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ movieId: props.movieId, userId: props.userId, rating: 0 })
+        const result = await swal({
+            title: "Are you sure?",
+            text: "Do you want to remove this rating?",
+            icon: "warning",
+            button: "Yes",
+            dangerMode: true,
         })
+        if (result) {
+            const res = await fetch('http://localhost:39249/movie/rating', {
+                method: "DELETE",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ movieId: props.movieId, userId: props.userId, rating: 0 })
+            })
 
-        if (res.status === 204) {
-            swal({
-                title: "Done!",
-                text: "Rating removed!",
-                icon: "success",
-                timer: 1500,
-                buttons: false
-            });
-        } else {
-            swal("Error!", "There was an error while removing the rating!", "error");
+            if (res.status === 204) {
+                swal({
+                    title: "Done!",
+                    text: "Rating removed!",
+                    icon: "success",
+                    timer: 1500,
+                    buttons: false
+                });
+            } else {
+                swal("Error!", "There was an error while removing the rating!", "error");
+            }
+            return res.status
         }
-        return res.status
     }
-
 
 
     return (<>

@@ -54,22 +54,27 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
         'Content-Type': 'application/json'
       },
       credentials: 'include'
-    }).then(user => user.json())
+    }).then(user => {
+      if (!user.ok) {
+        throw new Error("User not logged in")
+      }
+      return user.json()
+    })
       .then(userData => {
-        if (userData.status !== 401) {
-          setUserId(userData.id);
-          // Get recommended movies
-          fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
-            .then(movieData => {
-              setRecommendedMovies(movieData)
-            })
+        setUserId(userData.id);
+        // Get recommended movies
+        fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
+          .then(movieData => {
+            setRecommendedMovies(movieData)
+          })
 
-          // Get rated movies
-          fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
-            .then(movieData => {
-              setRatedMovies(movieData)
-            })
-        }
+        // Get rated movies
+        fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
+          .then(movieData => {
+            setRatedMovies(movieData)
+          })
+      }).catch(e => {
+        console.log(e)
       })
   }, []);
 
@@ -101,29 +106,35 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           'Content-Type': 'application/json'
         },
         credentials: 'include'
-      }).then(user => user.json())
+      }).then(user => {
+        if (!user.ok) {
+          throw new Error("User not logged in")
+        }
+        return user.json()
+      })
         .then(userData => {
-          if (userData.status !== 401) {
-            setUserId(userData.id);
+          setUserId(userData.id);
 
-            // Get updated highest rated movies
-            fetch('http://localhost:39249/home/highest').then(movies => movies.json())
-              .then(movieData => {
-                setHighestRatedMovies(movieData)
-              })
+          // Get updated highest rated movies
+          fetch('http://localhost:39249/home/highest').then(movies => movies.json())
+            .then(movieData => {
+              setHighestRatedMovies(movieData)
+            })
 
-            // Get recommended movies
-            fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
-              .then(movieData => {
-                setRecommendedMovies(movieData)
-              })
+          // Get recommended movies
+          fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
+            .then(movieData => {
+              setRecommendedMovies(movieData)
+            })
 
-            // Get rated movies
-            fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
-              .then(movieData => {
-                setRatedMovies(movieData)
-              })
-          }
+          // Get rated movies
+          fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
+            .then(movieData => {
+              setRatedMovies(movieData)
+            })
+        }
+        ).catch(e => {
+          console.log(e)
         })
     }
   }, [showRatingPopup.current]);
@@ -155,27 +166,32 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           'Content-Type': 'application/json'
         },
         credentials: 'include'
-      }).then(user => user.json())
+      }).then(user => {
+        if (!user.ok) {
+          throw new Error("User not logged in")
+        }
+        return user.json()
+      })
         .then(userData => {
-          if (userData.status !== 401) {
-            setUserId(userData.id);
-            // Refresh you rated movies
-            fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
-              .then(movieData => {
-                setRatedMovies(movieData)
-              })
-            // Get updated highest rated movies
-            fetch('http://localhost:39249/home/highest').then(movies => movies.json())
-              .then(movieData => {
-                setHighestRatedMovies(movieData)
-              })
+          setUserId(userData.id);
+          // Refresh you rated movies
+          fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
+            .then(movieData => {
+              setRatedMovies(movieData)
+            })
+          // Get updated highest rated movies
+          fetch('http://localhost:39249/home/highest').then(movies => movies.json())
+            .then(movieData => {
+              setHighestRatedMovies(movieData)
+            })
 
-            // Get updated recommended movies
-            fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
-              .then(movieData => {
-                setRecommendedMovies(movieData)
-              })
-          }
+          // Get updated recommended movies
+          fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
+            .then(movieData => {
+              setRecommendedMovies(movieData)
+            })
+        }).catch(e => {
+          console.log(e)
         })
     }
   }, [removedRating]);
@@ -277,7 +293,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           <h2 className="text-3xl mb-1 text-center">Top 10 highest rated movies</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
-        <Movies movies={highestRatedMovies === null ? highestRatedMoviesList.slice(0, 10) : highestRatedMovies.slice(0, 10)} />
+        <Movies movies={highestRatedMovies.length === 0 ? highestRatedMoviesList.slice(0, 10) : highestRatedMovies.slice(0, 10)} />
       </div>
       {showRatingPopup.current &&
         <Rating close={toggleRatingPopup} movieId={clickedMovie} userId={userId} />

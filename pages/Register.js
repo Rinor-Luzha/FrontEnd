@@ -41,33 +41,39 @@ export default function Register() {
         //     return
         // }
 
-
-        const resUserRegister = await fetch('http://localhost:39249/account/register', {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ name, surname, email, birthDate, password })
-        });
-        const userRegister = await resUserRegister.json();
-
-        if (resUserRegister.id !== "undefined") {
-            router.push('/login')
-            swal({
-                title: "Good job!",
-                text: "Registered!",
-                icon: "success",
-                buttons: false
+        try {
+            const resUserRegister = await fetch('http://localhost:39249/account/register', {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, surname, email, birthDate, password })
             });
-        } else {
-            setName("")
-            setSurname("")
-            setEmail("")
-            setPassword("")
-            setBirthDate("")
-            setPasswordConf("")
-            setFail(true)
+            if (!resUserRegister.ok) {
+                throw new Error("Error while registering user!");
+            }
+            const userRegister = await resUserRegister.json();
+
+            if (userRegister.id !== "undefined") {
+                router.push('/login')
+                swal({
+                    title: "Good job!",
+                    text: "Registered!",
+                    icon: "success",
+                    buttons: false
+                });
+            } else {
+                setName("")
+                setSurname("")
+                setEmail("")
+                setPassword("")
+                setBirthDate("")
+                setPasswordConf("")
+                setFail(true)
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
     return (
