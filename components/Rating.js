@@ -13,7 +13,6 @@ const Rating = (props) => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            credentials: 'include',
             body: JSON.stringify({ movieId: props.movieId, userId: props.userId, rating: ratingNumber })
         })
         if (res.status === 201) {
@@ -36,15 +35,17 @@ const Rating = (props) => {
         } else {
             swal("Error!", "There was an error while rating the movie!", "error");
         }
-        props.close();
+        props.close()
     }
+
+
+
 
     return (
         <div className="w-screen h-screen flex justify-center items-center fixed top-0 left-0 bottom-0 right-0">
             <div className="w-screen h-screen bg-black opacity-80 flex flex-col fixed justify-center items-center" onClick={props.close}>
-                <div className="w-fit h-16 lg:h-fit bg-grey rounded-lg">
-                    <div className="h-0 md:text-lg lg:text-xl text-sm text-right pr-2 hover:text-red hover:cursor-pointer"><i onClick={props.close} className="fas fa-close"></i></div>
-                    <ul className="h-fit w-fit p-2 flex justify-evenly">
+                <div id="ratingBox" className="w-fit h-12 md:h-fit bg-grey rounded-lg " onClick={(e) => { if (e.target.id == 'ratingBox') e.preventDefault(); e.stopPropagation() }}>
+                    <ul className="h-fit w-fit px-1 flex justify-evenly">
                         {[...Array(10)].map((star, i) => {
                             const ratingNumber = i + 1
                             return (
@@ -57,7 +58,7 @@ const Rating = (props) => {
                                     />
                                     <Icon icon="mdi:elephant"
                                         width={65}
-                                        className="xs:w-9 md:w-12 lg:w-16 hover:cursor-pointer transition-all duration-200"
+                                        className="xs:w-9 md:w-12 lg:w-16 pb-4 md:pb-0 hover:cursor-pointer transition-all duration-200"
                                         color={ratingNumber <= (hover || rating) ? "#e20100" : "#ffffff"}
                                         onMouseEnter={() => setHover(ratingNumber)}
                                         onMouseLeave={() => setHover(null)}
@@ -69,10 +70,11 @@ const Rating = (props) => {
                                 </label>
                             )
                         })}
+                        <div><i onClick={props.close} className="pr-1 hover:text-red hover:cursor-pointer fas fa-close text-2xl hidden md:block lg:text-3xl "></i></div>
                     </ul>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 

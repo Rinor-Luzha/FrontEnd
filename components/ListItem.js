@@ -11,7 +11,6 @@ export default function ListItem({ movie }) {
     }
     return <span key={index} className="xs:text-xs sm:text-xs md:text-sm lg:text-md w-fit h-fit cursor-default text-grey hover:bg-red hover:text-white transition-all duration-300">{actor.name + " " + actor.surname}</span>
   });
-  console.log(tags)
 
   let ratingImg = "";
 

@@ -51,7 +51,7 @@ export default function Login() {
         const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
         if (!emailInput.value.match(emailRegex)) {
-        alert('Invalid email address.');
+            alert('Invalid email address.');
         }
 
     }
@@ -72,7 +72,7 @@ export default function Login() {
                     </div>
                     <form className="flex flex-col items-center m-0" onSubmit={login}>
                         <div className="bg-lightgrey rounded-lg w-72 p-2 flex items-center m-0"><FaRegEnvelope className='text-grey m-2' />
-                            <input onKeyDown={handleKeyDown} onChange={e => { setEmail(e.target.value) }} type='email' name='email' placeholder='E-mail'id='email' required className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                            <input onKeyDown={handleKeyDown} onChange={e => { setEmail(e.target.value) }} type='email' name='email' placeholder='E-mail' id='email' required className='bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
                         <div className="bg-lightgrey rounded-lg w-72 p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
                             <input onKeyDown={handleKeyDown} onChange={e => { setPassword(e.target.value) }} type='password' name='password' placeholder='Password' className='bg-lightgrey outline-none text-sm text-black flex-1' />

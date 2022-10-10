@@ -30,12 +30,12 @@ export default function Register() {
 
         const password = document.getElementById('password').value;
         const passwordConf = document.getElementById('passwordConf').value;
-            if (password?.value !== passwordConf?.value) {
-                alert('Entered passwords do not match');
-            }
-            if (password.length <= 8) {
-                alert('Password must be 8 or more characters long')
-            }
+        if (password?.value !== passwordConf?.value) {
+            alert('Entered passwords do not match');
+        }
+        if (password.length <= 8) {
+            alert('Password must be 8 or more characters long')
+        }
         // Add more validation
         // if (password !== passwordConf) {
         //     return
@@ -58,7 +58,6 @@ export default function Register() {
                 title: "Good job!",
                 text: "Registered!",
                 icon: "success",
-                timer: 1500,
                 buttons: false
             });
         } else {
@@ -101,11 +100,11 @@ export default function Register() {
                         </div>
 
                         <div onChange={e => { setPassword(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
-                        <input type="password" placeholder="Password" id="password" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                            <input type="password" placeholder="Password" id="password" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
 
                         <div onChange={e => { setPasswordConf(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
-                        <input type="password" placeholder="Confirm Password" id="passwordConf" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                            <input type="password" placeholder="Confirm Password" id="passwordConf" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
                         <div className={fail ? "text-red p-2 m-3 text-center text-xs" : "hidden"}>Invalid credentials!</div>
                         <button type="submit" className="border-2 border-white rounded-full px-12 py-2 mb-5 m-4 inline-block text-white font-semibold  hover:bg-white hover:text-red">Register</button>

@@ -1,7 +1,7 @@
 import BigSlide from '../components/slides/BigSlide'
 import AliceCarousel from 'react-alice-carousel';
 import Movies from '../components/Movies'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import ResponsiveCarousel from '../components/ResponsiveCarousel';
 import Rating from '../components/Rating';
 import Footer from '../components/Footer';
@@ -34,29 +34,18 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
 
   const [ratedMovies, setRatedMovies] = useState([]);
   const [recommendedMovies, setRecommendedMovies] = useState([]);
+  const [highestRatedMovies, setHighestRatedMovies] = useState([]);
 
   const [userId, setUserId] = useState(null);
 
-  const [showRatingPopup, setShowRatingPopup] = useState(false);
+  const showRatingPopup = useRef(false);
+
+  const [removedRating, setRemovedRating] = useState(false);
+
 
   const [clickedMovie, setClickedMovie] = useState(null);
 
-
-  const toggleRatingPopup = (id) => {
-    if (userId === null) {
-      swal({
-        title: "Please log in first!",
-        text: "You need to be logged in to do that!",
-        icon: "warning",
-        timer: 2000,
-        buttons: false
-      });
-      return
-    }
-    setClickedMovie(id)
-    setShowRatingPopup(!showRatingPopup)
-  }
-
+  // On DOM load get user id together with his rated movies and recommended movies for him
   useEffect(() => {
     setDomLoaded(true)
     fetch('http://localhost:39249/account/user', {
@@ -82,7 +71,137 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
             })
         }
       })
-  }, [showRatingPopup]);
+  }, []);
+
+  //Refresh your rated, recommended and highest rated movies when you make a rating
+  useEffect(() => {
+    if (userId !== null) {
+
+      // Get updated highest rated movies
+      fetch('http://localhost:39249/home/highest').then(movies => movies.json())
+        .then(movieData => {
+          setHighestRatedMovies(movieData)
+        })
+
+      // Get recommended movies
+      fetch('http://localhost:39249/home/recommended?userid=' + userId).then(movies => movies.json())
+        .then(movieData => {
+          setRecommendedMovies(movieData)
+        })
+
+      // Get rated movies
+      fetch('http://localhost:39249/home/rated/?id=' + userId).then(movies => movies.json())
+        .then(movieData => {
+          setRatedMovies(movieData)
+        })
+    } else {
+      fetch('http://localhost:39249/account/user', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      }).then(user => user.json())
+        .then(userData => {
+          if (userData.status !== 401) {
+            setUserId(userData.id);
+
+            // Get updated highest rated movies
+            fetch('http://localhost:39249/home/highest').then(movies => movies.json())
+              .then(movieData => {
+                setHighestRatedMovies(movieData)
+              })
+
+            // Get recommended movies
+            fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
+              .then(movieData => {
+                setRecommendedMovies(movieData)
+              })
+
+            // Get rated movies
+            fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
+              .then(movieData => {
+                setRatedMovies(movieData)
+              })
+          }
+        })
+    }
+  }, [showRatingPopup.current]);
+
+  // Refresh your rated, recommended and highest rated movies when you remove a rating
+  useEffect(() => {
+    if (userId !== null) {
+      // Refresh you rated movies
+      fetch('http://localhost:39249/home/rated/?id=' + userId).then(movies => movies.json())
+        .then(movieData => {
+          setRatedMovies(movieData)
+        })
+      // Get updated highest rated movies
+      fetch('http://localhost:39249/home/highest').then(movies => movies.json())
+        .then(movieData => {
+          setHighestRatedMovies(movieData)
+        })
+
+      // Get updated recommended movies
+      fetch('http://localhost:39249/home/recommended?userid=' + userId).then(movies => movies.json())
+        .then(movieData => {
+          setRecommendedMovies(movieData)
+        })
+
+    } else {
+      fetch('http://localhost:39249/account/user', {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+      }).then(user => user.json())
+        .then(userData => {
+          if (userData.status !== 401) {
+            setUserId(userData.id);
+            // Refresh you rated movies
+            fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
+              .then(movieData => {
+                setRatedMovies(movieData)
+              })
+            // Get updated highest rated movies
+            fetch('http://localhost:39249/home/highest').then(movies => movies.json())
+              .then(movieData => {
+                setHighestRatedMovies(movieData)
+              })
+
+            // Get updated recommended movies
+            fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
+              .then(movieData => {
+                setRecommendedMovies(movieData)
+              })
+          }
+        })
+    }
+  }, [removedRating]);
+
+
+  const toggleRatingPopup = (id) => {
+    if (userId === null) {
+      swal({
+        title: "Please log in first!",
+        text: "You need to be logged in to do that!",
+        icon: "warning",
+        timer: 2000,
+        buttons: false
+      });
+      return
+    }
+    setClickedMovie(id)
+    showRatingPopup.current = !showRatingPopup.current;
+  }
+
+  const toggleRemoveRating = () => {
+    setRemovedRating(!removedRating);
+  }
+
+
+
   return (
     <>
       {/* Main slider */}
@@ -136,7 +255,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
             <h2 className="text-3xl mb-1 text-center">Movies you have rated</h2>
             <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
           </div>
-          <ResponsiveCarousel onClick={toggleRatingPopup} movies={ratedMovies} />
+          <ResponsiveCarousel close={toggleRatingPopup} movies={ratedMovies} rated={true} userId={userId} removeRating={toggleRemoveRating} />
         </div> : ""
       }
 
@@ -148,9 +267,9 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
         {domLoaded ? (userId === null ?
-          <ResponsiveCarousel onClick={toggleRatingPopup} movies={staticRecommended} />
+          <ResponsiveCarousel close={toggleRatingPopup} movies={staticRecommended} rated={false} removeRating={toggleRemoveRating} />
           :
-          <ResponsiveCarousel onClick={toggleRatingPopup} movies={recommendedMovies} />
+          <ResponsiveCarousel close={toggleRatingPopup} movies={recommendedMovies} rated={false} removeRating={toggleRemoveRating} />
         ) : ""}
       </div>
       <div className="py-5">
@@ -158,12 +277,13 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           <h2 className="text-3xl mb-1 text-center">Top 10 highest rated movies</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
-        <Movies movies={highestRatedMoviesList.slice(0, 10)} />
+        <Movies movies={highestRatedMovies === null ? highestRatedMoviesList.slice(0, 10) : highestRatedMovies.slice(0, 10)} />
       </div>
-      {showRatingPopup &&
+      {showRatingPopup.current &&
         <Rating close={toggleRatingPopup} movieId={clickedMovie} userId={userId} />
       }
       <Footer />
     </>
   )
-} 
+}
+
