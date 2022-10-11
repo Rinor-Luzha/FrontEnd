@@ -27,6 +27,7 @@ function Footer() {
             </div>
                 <span className="text-red px-2">Elefanti</span>Ratings
         </div>
+        <div></div>
 
         <hr className="text-white" />
         <div className="row">
