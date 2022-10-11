@@ -40,7 +40,7 @@ const Slide = (props) => {
             dangerMode: true,
         })
         if (result) {
-            const res = await fetch('http://localhost:39249/movie/rating', {
+            const res = await fetch(process.env.NEXT_PUBLIC_RATING, {
                 method: "DELETE",
                 headers: {
                     'Accept': 'application/json',

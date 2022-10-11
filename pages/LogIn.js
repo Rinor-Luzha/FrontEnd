@@ -22,7 +22,7 @@ export default function Login() {
     const login = async (e) => {
         e.preventDefault();
         try {
-            const resUserLogin = await fetch('http://localhost:39249/account/login', {
+            const resUserLogin = await fetch(process.env.NEXT_PUBLIC_LOGIN, {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',

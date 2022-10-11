@@ -42,7 +42,7 @@ export default function Register() {
         // }
 
         try {
-            const resUserRegister = await fetch('http://localhost:39249/account/register', {
+            const resUserRegister = await fetch(process.env.NEXT_PUBLIC_REGISTER, {
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',

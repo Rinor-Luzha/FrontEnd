@@ -5,9 +5,8 @@ import { Icon } from '@iconify/react';
 const Rating = (props) => {
     const [rating, setRating] = useState(null)
     const [hover, setHover] = useState(null)
-
     const saveRating = async (ratingNumber) => {
-        const res = await fetch('http://localhost:39249/movie/rating', {
+        const res = await fetch(process.env.NEXT_PUBLIC_RATING, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',

@@ -9,14 +9,14 @@ import Footer from '../components/Footer';
 export const getStaticProps = async () => {
 
   // New movies
-  const resNew = await fetch('http://localhost:39249/home/new');
+  const resNew = await fetch(process.env.NEW_MOVIES);
   const newMovies = await resNew.json();
 
   // Generate recommended movies in case user is not logged in
-  const recommendedRes = await fetch('http://localhost:39249/home/recommended');
+  const recommendedRes = await fetch(process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES);
   const recommendedMovies = await recommendedRes.json();
 
-  const highestRes = await fetch('http://localhost:39249/home/highest');
+  const highestRes = await fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES);
   const highestList = await highestRes.json();
 
   return {
@@ -48,7 +48,8 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
   // On DOM load get user id together with his rated movies and recommended movies for him
   useEffect(() => {
     setDomLoaded(true)
-    fetch('http://localhost:39249/account/user', {
+    console.log(process.env.NEXT_PUBLIC_REGISTER, "index", process.env.NEXT_PUBLIC_RATING)
+    fetch(process.env.USER, {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -63,13 +64,13 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
       .then(userData => {
         setUserId(userData.id);
         // Get recommended movies
-        fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
+        fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${userData.id}`).then(movies => movies.json())
           .then(movieData => {
             setRecommendedMovies(movieData)
           })
 
         // Get rated movies
-        fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
+        fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${userData.id}`).then(movies => movies.json())
           .then(movieData => {
             setRatedMovies(movieData)
           })
@@ -83,24 +84,24 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
     if (userId !== null) {
 
       // Get updated highest rated movies
-      fetch('http://localhost:39249/home/highest').then(movies => movies.json())
+      fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES).then(movies => movies.json())
         .then(movieData => {
           setHighestRatedMovies(movieData)
         })
 
       // Get recommended movies
-      fetch('http://localhost:39249/home/recommended?userid=' + userId).then(movies => movies.json())
+      fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${userId}`).then(movies => movies.json())
         .then(movieData => {
           setRecommendedMovies(movieData)
         })
 
       // Get rated movies
-      fetch('http://localhost:39249/home/rated/?id=' + userId).then(movies => movies.json())
+      fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${userId}`).then(movies => movies.json())
         .then(movieData => {
           setRatedMovies(movieData)
         })
     } else {
-      fetch('http://localhost:39249/account/user', {
+      fetch(process.env.NEXT_PUBLIC_USER, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -116,19 +117,19 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           setUserId(userData.id);
 
           // Get updated highest rated movies
-          fetch('http://localhost:39249/home/highest').then(movies => movies.json())
+          fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES).then(movies => movies.json())
             .then(movieData => {
               setHighestRatedMovies(movieData)
             })
 
           // Get recommended movies
-          fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
+          fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${userData.id}`).then(movies => movies.json())
             .then(movieData => {
               setRecommendedMovies(movieData)
             })
 
           // Get rated movies
-          fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
+          fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${userData.id}`).then(movies => movies.json())
             .then(movieData => {
               setRatedMovies(movieData)
             })
@@ -143,24 +144,24 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
   useEffect(() => {
     if (userId !== null) {
       // Refresh you rated movies
-      fetch('http://localhost:39249/home/rated/?id=' + userId).then(movies => movies.json())
+      fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${userId}`).then(movies => movies.json())
         .then(movieData => {
           setRatedMovies(movieData)
         })
       // Get updated highest rated movies
-      fetch('http://localhost:39249/home/highest').then(movies => movies.json())
+      fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES).then(movies => movies.json())
         .then(movieData => {
           setHighestRatedMovies(movieData)
         })
 
       // Get updated recommended movies
-      fetch('http://localhost:39249/home/recommended?userid=' + userId).then(movies => movies.json())
+      fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${userId}`).then(movies => movies.json())
         .then(movieData => {
           setRecommendedMovies(movieData)
         })
 
     } else {
-      fetch('http://localhost:39249/account/user', {
+      fetch(process.env.NEXT_PUBLIC_USER, {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
@@ -175,18 +176,18 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
         .then(userData => {
           setUserId(userData.id);
           // Refresh you rated movies
-          fetch('http://localhost:39249/home/rated/?id=' + userData.id).then(movies => movies.json())
+          fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${userData.id}`).then(movies => movies.json())
             .then(movieData => {
               setRatedMovies(movieData)
             })
           // Get updated highest rated movies
-          fetch('http://localhost:39249/home/highest').then(movies => movies.json())
+          fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES).then(movies => movies.json())
             .then(movieData => {
               setHighestRatedMovies(movieData)
             })
 
           // Get updated recommended movies
-          fetch('http://localhost:39249/home/recommended?userid=' + userData.id).then(movies => movies.json())
+          fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${userData.id}`).then(movies => movies.json())
             .then(movieData => {
               setRecommendedMovies(movieData)
             })
