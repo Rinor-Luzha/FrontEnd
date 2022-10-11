@@ -28,7 +28,6 @@ export default function Register() {
 
     const register = async (e) => {
         e.preventDefault();
-
         if (name === '') {
             swal({
                 title: "First Name is required!",
@@ -37,6 +36,7 @@ export default function Register() {
                 timer: 2000,
                 buttons: false
             });
+            setFail(true)
             return
         }
 
@@ -48,6 +48,7 @@ export default function Register() {
                 timer: 2000,
                 buttons: false
             });
+            setFail(true)
             return
         }
 
@@ -59,6 +60,7 @@ export default function Register() {
                 timer: 2000,
                 buttons: false
             });
+            setFail(true)
             return
         }
 
@@ -70,10 +72,12 @@ export default function Register() {
                 timer: 2000,
                 buttons: false
             });
+            setFail(true)
             return
         }
 
         if (birthDate === '') {
+            console.log('here')
             swal({
                 title: "Birthday Year is required!",
                 text: "Please enter your Birthday Year!",
@@ -81,10 +85,11 @@ export default function Register() {
                 timer: 2000,
                 buttons: false
             });
+            setFail(true)
             return
         }
 
-        if (birthDate > 2006) {
+        if (birthDate > '2014-01-01') {
             swal({
                 title: "Too young!",
                 text: "You have to be 16 years or older!",
@@ -92,20 +97,9 @@ export default function Register() {
                 timer: 2000,
                 buttons: false
             });
+            setFail(true)
             return
         }
-
-        if (password.length < 6) {
-            swal({
-                title: "Short Password!",
-                text: "Passwoord must have 6 or more characters!",
-                icon: "warning",
-                timer: 2000,
-                buttons: false
-            });
-            return
-        }
-
         if (password !== passwordConf) {
             swal({
                 title: "Passwords do not match!",
@@ -114,23 +108,23 @@ export default function Register() {
                 timer: 2400,
                 buttons: false
             });
+            setFail(true)
             return
         }
 
-        // const regexp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/i;
-        // if (regexp.test(password)) {
-        //     swal({
-        //           title: "Wrong type of password!",
-        //           text: "Password must contain at least one numeric digit, one uppercase and one lowercase letter!",
-        //           icon: "warning",
-        //           timer: 2000,
-        //           buttons: false
-        //         });
-        //         return
-        //     } 
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            swal({
+                title: "Weak password!",
+                text: "Password must have minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
+                icon: "warning",
+                buttons: false
+            });
+            return
+        }
 
 
-        const resUserRegister = await fetch('http://localhost:39249/account/register', {
+        const resUserRegister = await fetch(process.env.NEXT_PUBLIC_REGISTER, {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -140,8 +134,8 @@ export default function Register() {
         });
         const userRegister = await resUserRegister.json();
 
-        if (resUserRegister.id !== "undefined") {
-            router.push('/LogIn')
+        if (userRegister.id !== "undefined") {
+            router.push('/login')
             swal({
                 title: "Good job!",
                 text: "Registered!",
@@ -149,12 +143,12 @@ export default function Register() {
                 buttons: false
             });
         } else {
-            setName("")
-            setSurname("")
-            setEmail("")
-            setPassword("")
-            setBirthDate("")
-            setPasswordConf("")
+            swal({
+                title: "Error!",
+                text: "There was an error registering you!",
+                icon: "error",
+                buttons: false
+            });
             setFail(true)
         }
     };
@@ -180,7 +174,7 @@ export default function Register() {
                         </div>
 
                         <div className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3">
-                            <input onChange={e => { setBirthDate(e.target.value) }} type='number' name='birthDate' placeholder='Birthday Year' className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                            <input onChange={e => { setBirthDate(e.target.value) }} max="2004-01-01" type='date' name='birthDate' placeholder='Birthday Year' className='bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
 
                         <div onChange={e => { setEmail(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3"><FaRegEnvelope className='text-grey m-2' />
@@ -188,11 +182,11 @@ export default function Register() {
                         </div>
 
                         <div onChange={e => { setPassword(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
-                            <input type="password" placeholder="Password" id="password" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                            <input type="password" placeholder="Password" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
 
                         <div onChange={e => { setPasswordConf(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
-                            <input type="password" placeholder="Confirm Password" id="passwordConf" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                            <input type="password" placeholder="Confirm Password" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
                         <div className={fail ? "text-red p-2 m-3 text-center text-xs" : "hidden"}>Invalid credentials!</div>
                         <button type="submit" className="border-2 border-white rounded-full px-12 py-2 mb-5 m-4 inline-block text-white font-semibold  hover:bg-white hover:text-red">Register</button>
