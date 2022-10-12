@@ -1,12 +1,17 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
+
   theme: {
+    
     screens: {
-      'xs': '300px',
+      'xs': '390px',
+      // => @media (min-width: 390px) { ... }
+
       'sm': '640px',
       // => @media (min-width: 640px) { ... }
 
@@ -24,8 +29,12 @@ module.exports = {
     },
 
     extend: {
+      
       spacing: {
         '104': '28rem',
+        animation: {
+
+        },
       }
     },
     colors: {
@@ -34,14 +43,18 @@ module.exports = {
       'black': '#191818',
       'grey': '#aaacb1',
       'lightgrey': '#ededee',
-      'darkgrey': '#333131'
+      'darkgrey': '#333131',
+      'navhover': '#e5e4e2'
     },
-    fontWeight: {
-      'normal': 400,
-      'medium': 500,
-      'semibold': 600,
-      'bold': 900,
+    font: {
+      fontWeight: {
+        normal: 400,
+        medium: 500,
+        semibold: 600,
+        bold: 900,
+      }
     }
   },
   plugins: [],
 }
+

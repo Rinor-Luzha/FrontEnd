@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react'
 import ResponsiveCarousel from '../components/ResponsiveCarousel';
 import Rating from '../components/Rating';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 export const getServerSideProps = async () => {
 
@@ -222,7 +223,9 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
   return (
     <>
       {/* Main slider */}
-      <div className='py-5'>
+
+      <Header className="sticky" />
+      <div className='py-5 pt-12'>
         <div className="my-5 flex flex-col items-center">
           <h2 className="text-3xl mb-1 text-center">New Movies</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
