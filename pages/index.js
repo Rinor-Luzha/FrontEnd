@@ -5,8 +5,8 @@ import { useState, useEffect, useRef } from 'react'
 import ResponsiveCarousel from '../components/ResponsiveCarousel';
 import Rating from '../components/Rating';
 import Footer from '../components/Footer';
-import Header from '../components/Header'
-export const getStaticProps = async () => {
+
+export const getServerSideProps = async () => {
 
   // New movies
   const resNew = await fetch(process.env.NEW_MOVIES);
@@ -222,7 +222,6 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
   return (
     <>
       {/* Main slider */}
-      <Header />
       <div className='py-5'>
         <div className="my-5 flex flex-col items-center">
           <h2 className="text-3xl mb-1 text-center">New Movies</h2>
