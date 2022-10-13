@@ -45,6 +45,7 @@ export default function ListItem({ movie }) {
   const date = new Date(year, month, day)
 
   const dateArray = date.toDateString().split(' ');
+  const nrArray = date;
   const dateFormat = dateArray[2] + ' ' + dateArray[1] + ' ' + dateArray[3];
 
   return (
