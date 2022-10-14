@@ -7,7 +7,7 @@ module.exports = {
   ],
 
   theme: {
-    
+
     screens: {
       'xs': '390px',
       // => @media (min-width: 390px) { ... }
@@ -29,12 +29,15 @@ module.exports = {
     },
 
     extend: {
-      
+
       spacing: {
         '104': '28rem',
         animation: {
 
         },
+        // transformOrigin: {
+        //   'left-center': 'top left',
+        // }
       }
     },
     colors: {

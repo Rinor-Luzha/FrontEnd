@@ -1,7 +1,7 @@
 import React from 'react'
 import AliceCarousel from 'react-alice-carousel';
 import Slide from './slides/Slide'
-const ResponsiveCarousel = ({ movies, close, rated, removeRating, userId }) => {
+const ResponsiveCarousel = ({ movies, close, rated, removeRating, user }) => {
     return (
         <AliceCarousel duration={500}
             responsive={{
@@ -37,7 +37,7 @@ const ResponsiveCarousel = ({ movies, close, rated, removeRating, userId }) => {
                         rating={movie.rating}
                         rated={rated}
                         removeRating={removeRating}
-                        userId={userId}
+                        user={user}
                     />
                 }
                 )

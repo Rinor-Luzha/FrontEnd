@@ -4,9 +4,6 @@ import Movies from '../components/Movies'
 import { useState, useEffect, useRef } from 'react'
 import ResponsiveCarousel from '../components/ResponsiveCarousel';
 import Rating from '../components/Rating';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-
 export const getServerSideProps = async () => {
 
   // New movies
@@ -30,14 +27,12 @@ export const getServerSideProps = async () => {
 }
 
 
-export default function Home({ newMoviesList, staticRecommended, highestRatedMoviesList }) {
+export default function Home({ newMoviesList, staticRecommended, highestRatedMoviesList, user, setUser }) {
   const [domLoaded, setDomLoaded] = useState(false);
 
   const [ratedMovies, setRatedMovies] = useState([]);
   const [recommendedMovies, setRecommendedMovies] = useState([]);
   const [highestRatedMovies, setHighestRatedMovies] = useState([]);
-
-  const [userId, setUserId] = useState(null);
 
   const showRatingPopup = useRef(false);
 
@@ -49,41 +44,24 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
   // On DOM load get user id together with his rated movies and recommended movies for him
   useEffect(() => {
     setDomLoaded(true)
-    console.log(process.env.NEXT_PUBLIC_REGISTER, "index", process.env.NEXT_PUBLIC_RATING)
-    fetch(process.env.USER, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      credentials: 'include'
-    }).then(user => {
-      if (!user.ok) {
-        throw new Error("User not logged in")
-      }
-      return user.json()
-    })
-      .then(userData => {
-        setUserId(userData.id);
-        // Get recommended movies
-        fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${userData.id}`).then(movies => movies.json())
-          .then(movieData => {
-            setRecommendedMovies(movieData)
-          })
+    if (user !== null) {
+      // Get recommended movies
+      fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${user.id}`).then(movies => movies.json())
+        .then(movieData => {
+          setRecommendedMovies(movieData)
+        })
 
-        // Get rated movies
-        fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${userData.id}`).then(movies => movies.json())
-          .then(movieData => {
-            setRatedMovies(movieData)
-          })
-      }).catch(e => {
-        console.log(e)
-      })
+      // Get rated movies
+      fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${user.id}`).then(movies => movies.json())
+        .then(movieData => {
+          setRatedMovies(movieData)
+        })
+    }
   }, []);
 
   //Refresh your rated, recommended and highest rated movies when you make a rating
   useEffect(() => {
-    if (userId !== null) {
-
+    if (user !== null) {
       // Get updated highest rated movies
       fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES).then(movies => movies.json())
         .then(movieData => {
@@ -91,61 +69,24 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
         })
 
       // Get recommended movies
-      fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${userId}`).then(movies => movies.json())
+      fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${user.id}`).then(movies => movies.json())
         .then(movieData => {
           setRecommendedMovies(movieData)
         })
 
       // Get rated movies
-      fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${userId}`).then(movies => movies.json())
+      fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${user.id}`).then(movies => movies.json())
         .then(movieData => {
           setRatedMovies(movieData)
-        })
-    } else {
-      fetch(process.env.NEXT_PUBLIC_USER, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-      }).then(user => {
-        if (!user.ok) {
-          throw new Error("User not logged in")
-        }
-        return user.json()
-      })
-        .then(userData => {
-          setUserId(userData.id);
-
-          // Get updated highest rated movies
-          fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES).then(movies => movies.json())
-            .then(movieData => {
-              setHighestRatedMovies(movieData)
-            })
-
-          // Get recommended movies
-          fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${userData.id}`).then(movies => movies.json())
-            .then(movieData => {
-              setRecommendedMovies(movieData)
-            })
-
-          // Get rated movies
-          fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${userData.id}`).then(movies => movies.json())
-            .then(movieData => {
-              setRatedMovies(movieData)
-            })
-        }
-        ).catch(e => {
-          console.log(e)
         })
     }
   }, [showRatingPopup.current]);
 
   // Refresh your rated, recommended and highest rated movies when you remove a rating
   useEffect(() => {
-    if (userId !== null) {
+    if (user !== null) {
       // Refresh you rated movies
-      fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${userId}`).then(movies => movies.json())
+      fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${user.id}`).then(movies => movies.json())
         .then(movieData => {
           setRatedMovies(movieData)
         })
@@ -156,51 +97,40 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
         })
 
       // Get updated recommended movies
-      fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${userId}`).then(movies => movies.json())
+      fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${user.id}`).then(movies => movies.json())
         .then(movieData => {
           setRecommendedMovies(movieData)
         })
 
-    } else {
-      fetch(process.env.NEXT_PUBLIC_USER, {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-      }).then(user => {
-        if (!user.ok) {
-          throw new Error("User not logged in")
-        }
-        return user.json()
-      })
-        .then(userData => {
-          setUserId(userData.id);
-          // Refresh you rated movies
-          fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${userData.id}`).then(movies => movies.json())
-            .then(movieData => {
-              setRatedMovies(movieData)
-            })
-          // Get updated highest rated movies
-          fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES).then(movies => movies.json())
-            .then(movieData => {
-              setHighestRatedMovies(movieData)
-            })
-
-          // Get updated recommended movies
-          fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${userData.id}`).then(movies => movies.json())
-            .then(movieData => {
-              setRecommendedMovies(movieData)
-            })
-        }).catch(e => {
-          console.log(e)
-        })
     }
   }, [removedRating]);
 
+  useEffect(() => {
+    if (user !== null) {
+      // Refresh you rated movies
+      fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${user.id}`).then(movies => movies.json())
+        .then(movieData => {
+          setRatedMovies(movieData)
+        })
+      // Get updated highest rated movies
+      fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES).then(movies => movies.json())
+        .then(movieData => {
+          setHighestRatedMovies(movieData)
+        })
+
+      // Get updated recommended movies
+      fetch(`${process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES}?userid=${user.id}`).then(movies => movies.json())
+        .then(movieData => {
+          setRecommendedMovies(movieData)
+        })
+    } else {
+      setRatedMovies([])
+    }
+  }, [user]);
+
 
   const toggleRatingPopup = (id) => {
-    if (userId === null) {
+    if (user === null) {
       swal({
         title: "Please log in first!",
         text: "You need to be logged in to do that!",
@@ -223,9 +153,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
   return (
     <>
       {/* Main slider */}
-
-      <Header className="sticky" />
-      <div className='py-5 pt-12'>
+      <div className='py-5 pt-16' id="new">
         <div className="my-5 flex flex-col items-center">
           <h2 className="text-3xl mb-1 text-center">New Movies</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
@@ -270,29 +198,29 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
       {/* Rated movies */}
 
       {ratedMovies.length !== 0 && domLoaded ?
-        <div className="py-5 shadow-sm">
+        <div className="py-5 shadow-sm" id="myRatings">
           <div className="flex flex-col items-center">
             <h2 className="text-3xl mb-1 text-center">Movies you have rated</h2>
             <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
           </div>
-          <ResponsiveCarousel close={toggleRatingPopup} movies={ratedMovies} rated={true} userId={userId} removeRating={toggleRemoveRating} />
+          <ResponsiveCarousel close={toggleRatingPopup} movies={ratedMovies} rated={true} user={user} removeRating={toggleRemoveRating} />
         </div> : ""
       }
 
       {/* Recommended movies */}
 
-      <div className="py-5">
+      <div className="py-5" id="recommended">
         <div className="flex flex-col items-center">
           <h2 className="text-3xl mb-1 text-center">Recommended movies for you</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
-        {domLoaded ? (userId === null ?
+        {domLoaded ? (user === null ?
           <ResponsiveCarousel close={toggleRatingPopup} movies={staticRecommended} rated={false} removeRating={toggleRemoveRating} />
           :
           <ResponsiveCarousel close={toggleRatingPopup} movies={recommendedMovies} rated={false} removeRating={toggleRemoveRating} />
         ) : ""}
       </div>
-      <div className="py-5">
+      <div className="py-5" id="highestRated">
         <div className="flex flex-col items-center">
           <h2 className="text-3xl mb-1 text-center">Top 10 highest rated movies</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
@@ -300,9 +228,8 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
         <Movies movies={highestRatedMovies.length === 0 ? highestRatedMoviesList.slice(0, 10) : highestRatedMovies.slice(0, 10)} />
       </div>
       {showRatingPopup.current &&
-        <Rating close={toggleRatingPopup} movieId={clickedMovie} userId={userId} />
+        <Rating close={toggleRatingPopup} movieId={clickedMovie} user={user} />
       }
-      <Footer />
     </>
   )
 }

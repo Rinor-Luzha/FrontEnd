@@ -7,7 +7,21 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import swal from 'sweetalert';
 
-export default function Register() {
+export default function Register({ user }) {
+    const router = useRouter()
+
+    if (user !== null) {
+        swal({
+            title: "You are logged in!",
+            text: "Please log out first!",
+            icon: "info",
+            timer: 2000,
+            buttons: false
+        });
+        router.push("/")
+    }
+
+
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
     const [email, setEmail] = useState("")
@@ -17,8 +31,6 @@ export default function Register() {
     const [birthDate, setBirthDate] = useState("")
 
     const [fail, setFail] = useState(false)
-
-    const router = useRouter()
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {

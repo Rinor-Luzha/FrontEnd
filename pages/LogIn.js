@@ -2,16 +2,28 @@ import React from 'react'
 import { FaRegEnvelope } from 'react-icons/fa'
 import { MdLockOutline } from 'react-icons/md'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import swal from 'sweetalert';
 
 
-export default function Login() {
+export default function Login({ user, setUser }) {
+    const router = useRouter()
+
+    if (user !== null) {
+        swal({
+            title: "You are logged in!",
+            text: "Please log out first!",
+            icon: "info",
+            timer: 2000,
+            buttons: false
+        });
+        router.push("/")
+    }
+
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [fail, setFail] = useState(false)
-    const router = useRouter()
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -37,14 +49,36 @@ export default function Login() {
             const userLogin = await resUserLogin.json();
 
             if (userLogin.message === "Success") {
-                router.push('/')
-                swal({
-                    title: "Good job!",
-                    text: "Logged in!",
-                    icon: "success",
-                    timer: 1500,
-                    buttons: false
-                });
+                fetch(process.env.NEXT_PUBLIC_USER, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                }).then(user => {
+                    if (!user.ok) {
+                        setUser(null)
+                        throw new Error("User not logged in")
+                    }
+                    return user.json()
+                })
+                    .then((userData) => {
+                        router.push('/')
+                        swal({
+                            title: "Good job!",
+                            text: "Logged in!",
+                            icon: "success",
+                            timer: 1500,
+                            buttons: false
+                        });
+                        setTimeout(() => {
+                            setUser(userData)
+                        }, 1500)
+                    })
+                    .catch(e => {
+                        console.log(e)
+                    })
+
             } else {
                 setEmail("")
                 setPassword("")

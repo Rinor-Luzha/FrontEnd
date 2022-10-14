@@ -15,7 +15,7 @@ export const getServerSideProps = async (context) => {
 
 const Search = ({ queriedMovies, query }) => {
     return (
-        <div div className="py-5" >
+        <div className="py-5 pt-20 min-h-screen" >
             <div className="flex flex-col items-center">
                 <h2 className="text-3xl md: mb-1 text-center">Search results</h2>
                 <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
@@ -33,12 +33,3 @@ const Search = ({ queriedMovies, query }) => {
 }
 
 export default Search
-
-// const handleKeyDown = (event) => {
-//     if (event.key === 'Enter') {
-//         router.push({
-//             pathname: '/search',
-//             query: { title: searchParams },
-//         })
-//     }
-// }

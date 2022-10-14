@@ -46,7 +46,7 @@ const Slide = (props) => {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ movieId: props.movieId, userId: props.userId, rating: 0 })
+                body: JSON.stringify({ movieId: props.movieId, userId: props.user.id, rating: 0 })
             })
 
             if (res.status === 204) {

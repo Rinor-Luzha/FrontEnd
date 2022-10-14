@@ -12,7 +12,7 @@ const Rating = (props) => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ movieId: props.movieId, userId: props.userId, rating: ratingNumber })
+            body: JSON.stringify({ movieId: props.movieId, userId: props.user.id, rating: ratingNumber })
         })
         if (res.status === 201) {
             swal({
