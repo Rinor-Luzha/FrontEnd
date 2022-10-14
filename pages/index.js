@@ -1,7 +1,7 @@
 import BigSlide from '../components/slides/BigSlide'
 import AliceCarousel from 'react-alice-carousel';
 import Movies from '../components/Movies'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import ResponsiveCarousel from '../components/ResponsiveCarousel';
 import Rating from '../components/Rating';
 export const getServerSideProps = async () => {
@@ -34,7 +34,8 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
   const [recommendedMovies, setRecommendedMovies] = useState([]);
   const [highestRatedMovies, setHighestRatedMovies] = useState([]);
 
-  const showRatingPopup = useRef(false);
+  const [showRatingPopup, setShowRatingPopup] = useState(false);
+
 
   const [removedRating, setRemovedRating] = useState(false);
 
@@ -80,7 +81,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           setRatedMovies(movieData)
         })
     }
-  }, [showRatingPopup.current]);
+  }, [showRatingPopup]);
 
   // Refresh your rated, recommended and highest rated movies when you remove a rating
   useEffect(() => {
@@ -141,7 +142,8 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
       return
     }
     setClickedMovie(id)
-    showRatingPopup.current = !showRatingPopup.current;
+    // showRatingPopup.current = !showRatingPopup.current;
+    setShowRatingPopup(!showRatingPopup)
   }
 
   const toggleRemoveRating = () => {
@@ -185,7 +187,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
                 genres += genre + ", "
               })
 
-              return <BigSlide key={movie.id} title={movie.title}
+              return <BigSlide key={movie.id} movieId={movie.id} title={movie.title}
                 genres={genres.substring(0, genres.length - 2)}
                 img={movie.img.substring(1)}
               />
@@ -227,7 +229,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
         </div>
         <Movies movies={highestRatedMovies.length === 0 ? highestRatedMoviesList.slice(0, 10) : highestRatedMovies.slice(0, 10)} />
       </div>
-      {showRatingPopup.current &&
+      {showRatingPopup &&
         <Rating close={toggleRatingPopup} movieId={clickedMovie} user={user} />
       }
     </>

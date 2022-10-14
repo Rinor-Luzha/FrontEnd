@@ -32,12 +32,11 @@ module.exports = {
 
       spacing: {
         '104': '28rem',
+        '108': '30rem',
+        '110': '32rem',
         animation: {
 
-        },
-        // transformOrigin: {
-        //   'left-center': 'top left',
-        // }
+        }
       }
     },
     colors: {

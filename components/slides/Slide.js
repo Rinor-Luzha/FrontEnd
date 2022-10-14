@@ -72,7 +72,7 @@ const Slide = (props) => {
                 <div className="absolute top-2 right-3 text-grey hover:text-red hover:cursor-pointer transition-all duration-300" onClick={async () => { const res = await removeRating(); if (res === 204) await props.removeRating() }} ><i className="fas fa-close text-4xl"></i></div>
             }
             <div className="flex items-center justify-center h-80">
-                <img src={props.img} className="h-80" alt="product" />
+                <img src={props.img} className="h-80" alt="movie" />
             </div>
             <div className="">
                 <div className="cursor-default w-full text-2xl text-black">{props.title}</div>
@@ -89,7 +89,7 @@ const Slide = (props) => {
                     </button>
                 </li>
                 <li>
-                    <Link href="/" >
+                    <Link href={`/movies/${props.movieId}`} >
                         <i className="text-white relative flex items-center justify-center w-12 h-12 cursor-pointer trasition-all duration-500 rounded-tl-xl rounded-br-xl rounded-tr-md rounded-bl-lg hover:bg-black hover:bg-opacity-80 hover:scale-110 fa-solid fas	fa-angle-up"></i>
                     </Link>
                 </li>
