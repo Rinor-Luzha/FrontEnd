@@ -203,7 +203,7 @@ export default function Register({ user }) {
                         <div className={fail ? "text-red p-2 m-3 text-center text-xs" : "hidden"}>Invalid credentials!</div>
                         <button type="submit" className="border-2 border-white rounded-full px-12 py-2 mb-5 m-4 inline-block text-white font-semibold  hover:bg-white hover:text-red">Register</button>
                     </form>
-                    <Link href='/LogIn'><span className='text-sm text-white hover:cursor-pointer hover:underline'>Already have an account?</span></Link>
+                    <Link href='/login'><span className='text-sm text-white hover:cursor-pointer hover:underline'>Already have an account?</span></Link>
                 </div>
 
             </div>
