@@ -32,7 +32,7 @@ export default function ListItem({ movie }) {
   } else if (movie.rating <= 9) {
     ratingImg = "/ratings/90.png";
 
-  } else if (movie.rating <= 100) {
+  } else if (movie.rating <= 9.5) {
     ratingImg = "/ratings/95.png";
   } else {
     ratingImg = "/ratings/100.png";

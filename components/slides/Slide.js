@@ -25,7 +25,7 @@ const Slide = (props) => {
     } else if (props.rating <= 9) {
         ratingImg = "/ratings/90.png";
 
-    } else if (props.rating <= 100) {
+    } else if (props.rating <= 9.5) {
         ratingImg = "/ratings/95.png";
     } else {
         ratingImg = "/ratings/100.png";
