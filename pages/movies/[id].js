@@ -53,28 +53,28 @@ const Moive = ({ queriedMovie, user }) => {
                         <h2 className="text-3xl mb-1 text-center">{queriedMovie.title}</h2>
                         <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
                     </div>
-                    <div className="py-5 border-b border-grey">
+                    <div className="py-5 px-3 border-b border-grey">
                         <div className="flex flex-col w-fit mb-1">
                             <h2 className="text-xl">Description</h2>
                             <div className="border-b-2 border-red w-22"></div>
                         </div>
                         <div className='text-sm sm:text-sm md:text-md lg:text-lg'>{queriedMovie.description}</div>
                     </div>
-                    <div className="py-5 border-b border-grey">
+                    <div className="py-5 px-3 border-b border-grey">
                         <div className="flex flex-col w-fit mb-1">
                             <h2 className="text-xl">Actors</h2>
                             <div className="border-b-2 border-red w-16"></div>
                         </div>
                         <Cast cast={queriedMovie.actors} type={"actors"} />
                     </div>
-                    <div className='py-5 border-b border-grey'>
+                    <div className='py-5 px-3 border-b border-grey'>
                         <div className="flex flex-col w-fit mb-1">
                             <h2 className="text-xl">Writers</h2>
                             <div className="border-b-2 border-red w-16"></div>
                         </div>
                         <Cast cast={queriedMovie.writers} type={"writers"} />
                     </div>
-                    <div className='py-5 border-b border-grey'>
+                    <div className='py-5 px-3 border-b border-grey'>
                         <div className="flex flex-col w-fit mb-1">
                             <h2 className="text-xl">Directors</h2>
                             <div className="border-b-2 border-red w-20"></div>
@@ -82,7 +82,7 @@ const Moive = ({ queriedMovie, user }) => {
                         <Cast cast={queriedMovie.directors} type={"directors"} />
                     </div>
 
-                    <div className='py-5 flex justify-center items-center gap-5'>
+                    <div className='py-5 px-3 flex justify-center items-center gap-5'>
                         <div className='text-2xl'>
                             {queriedMovie.rating}
                         </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import NavBar from './NavBar/NavBar'
-import Footer from './Footer'
+import NavBar from '../NavBar/NavBar'
+import Footer from '../Footer'
 
 const Layout = ({ children, user, setUser }) => {
     return (

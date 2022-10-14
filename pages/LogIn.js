@@ -2,7 +2,7 @@ import React from 'react'
 import { FaRegEnvelope } from 'react-icons/fa'
 import { MdLockOutline } from 'react-icons/md'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import swal from 'sweetalert';
 
@@ -65,7 +65,7 @@ export default function Login({ user, setUser }) {
                     .then((userData) => {
                         router.push('/')
                         swal({
-                            title: "Good job!",
+                            title: "Done!",
                             text: "Logged in!",
                             icon: "success",
                             timer: 1500,

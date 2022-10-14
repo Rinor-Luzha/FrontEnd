@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import swal from 'sweetalert';
 import { Icon } from '@iconify/react';
 
@@ -16,7 +16,7 @@ const Rating = (props) => {
         })
         if (res.status === 201) {
             swal({
-                title: "Good job!",
+                title: "Done!",
                 text: "Rating created!",
                 icon: "success",
                 timer: 1500,
@@ -25,7 +25,7 @@ const Rating = (props) => {
 
         } else if (res.status === 200) {
             swal({
-                title: "Good job!",
+                title: "Done!",
                 text: "Rating updated!",
                 icon: "success",
                 timer: 1500,

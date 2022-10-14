@@ -36,7 +36,7 @@ const Banner = ({ movie, user }) => {
                 <div className="h-104 bg-black w-full absolute top-16"></div>
                 <div className="group absolute top-16 w-fit">
                     <GenreTags genres={movie.genres} />
-                    <img src={movie.img.substring(1)} alt={movie.title} className=" h-104 w-80 hover:cursor-pointer hover:shadow-lg transition-all duration-500" />
+                    <img src={movie.img.substring(1)} alt={movie.title} className=" rounded-md h-104 w-80 hover:cursor-pointer hover:shadow-lg transition-all duration-500" />
                     <div className='flex justify-between text-grey'>
                         <div>
                             {dateFormat}
