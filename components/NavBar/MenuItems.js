@@ -4,10 +4,11 @@ import { useRouter } from 'next/router'
 import Link from 'next/link';
 import swal from 'sweetalert';
 
-const MenuItems = ({ clickedMenu, user, setUser }) => {
+const MenuItems = ({ clickedMenu, user, setUser, setClicked }) => {
     const router = useRouter()
     const logout = async () => {
         try {
+            setClicked(false)
             const resUserLogout = await fetch(process.env.NEXT_PUBLIC_LOGOUT, {
                 method: "POST",
                 credentials: 'include'
@@ -55,13 +56,13 @@ const MenuItems = ({ clickedMenu, user, setUser }) => {
             }
             <div className="group hover:cursor-pointer hover:text-red px-5 py-4 transition-all duration-300 shadow-sm md:shadow-none md:block">
                 {router.pathname === '/' ?
-                    <Scroll to="new" spy={true} smooth={true} offset={-60} duration={500}>
+                    <Scroll to="new" spy={true} smooth={true} offset={-60} duration={500} onClick={() => { setClicked(false) }}>
                         <li className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Home
                         </li>
                     </Scroll> :
-                    <Link href="/" scroll={false}>
-                        <li className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
+                    <Link href="/" scroll={false} >
+                        <li onClick={() => { setClicked(false) }} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Home
                         </li>
                     </Link>
@@ -69,13 +70,13 @@ const MenuItems = ({ clickedMenu, user, setUser }) => {
             </div>
             {user && <div className="group hover:cursor-pointer hover:text-red px-5 py-4 transition-all duration-300 shadow-sm md:shadow-none md:hidden lg:block">
                 {router.pathname === '/' ?
-                    <Scroll to="myRatings" spy={true} smooth={true} offset={-60} duration={500}>
+                    <Scroll to="myRatings" spy={true} smooth={true} offset={-60} duration={500} onClick={() => { setClicked(false) }}>
                         <li className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             My Ratings
                         </li>
                     </Scroll> :
-                    <Link href="/" scroll={false}>
-                        <li className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
+                    <Link href="/" scroll={false} >
+                        <li onClick={() => { setClicked(false) }} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             My Ratings
                         </li>
                     </Link>
@@ -83,13 +84,13 @@ const MenuItems = ({ clickedMenu, user, setUser }) => {
             </div>}
             <div className="group hover:cursor-pointer hover:text-red px-5 py-4 transition-all duration-300 shadow-sm md:shadow-none">
                 {router.pathname === '/' ?
-                    <Scroll to="recommended" spy={true} smooth={true} offset={-60} duration={500}>
+                    <Scroll to="recommended" spy={true} smooth={true} offset={-60} duration={500} onClick={() => { setClicked(false) }}>
                         <li className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Recommended
                         </li>
                     </Scroll> :
-                    <Link href="/" scroll={false}>
-                        <li className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
+                    <Link href="/" scroll={false} >
+                        <li onClick={() => { setClicked(false) }} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Recommended
                         </li>
                     </Link>
@@ -97,13 +98,13 @@ const MenuItems = ({ clickedMenu, user, setUser }) => {
             </div>
             <div className="group hover:cursor-pointer px-5 py-4 transition-all duration-300 md:hidden 2xl:block shadow-sm md:shadow-none">
                 {router.pathname === '/' ?
-                    <Scroll to="highestRated" spy={true} smooth={true} offset={-60} duration={500}>
+                    <Scroll to="highestRated" spy={true} smooth={true} offset={-60} duration={500} onClick={() => { setClicked(false) }}>
                         <li className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Highest Rated
                         </li>
                     </Scroll> :
-                    <Link href="/" scroll={false}>
-                        <li className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
+                    <Link href="/" scroll={false} >
+                        <li onClick={() => { setClicked(false) }} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Highest Rated
                         </li>
                     </Link>
@@ -111,21 +112,21 @@ const MenuItems = ({ clickedMenu, user, setUser }) => {
             </div>
             <div className="group hover:cursor-pointer hover:text-red px-5 py-4 transition-all duration-300 md:hidden xl:block shadow-sm md:shadow-none">
                 {router.pathname === '/' ?
-                    <Scroll to="randomMovie" spy={true} smooth={true} offset={-60} duration={500}>
+                    <Scroll to="randomMovie" spy={true} smooth={true} offset={-60} duration={500} onClick={() => { setClicked(false) }}>
                         <li className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Random Movie
                         </li>
                     </Scroll> :
-                    <Link href="/" scroll={false}>
-                        <li className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
+                    <Link href="/" scroll={false} >
+                        <li onClick={() => { setClicked(false) }} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Random Movie
                         </li>
                     </Link>
                 }
             </div>
             <div className="group hover:cursor-pointer px-5 py-4 transition-all duration-300 md:block shadow-sm md:shadow-none">
-                <Link href={user !== null ? "/account" : "/login"}>
-                    <li className="flex items-center gap-2">
+                <Link href={user !== null ? "/account" : "/login"} >
+                    <li onClick={() => { setClicked(false) }} className="flex items-center gap-2">
                         <p className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 transition-all duration-300 group-hover:text-red after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             My Account
                         </p>

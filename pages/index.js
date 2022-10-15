@@ -1,9 +1,10 @@
 import BigSlide from '../components/slides/BigSlide'
 import AliceCarousel from 'react-alice-carousel';
-import Movies from '../components/Movies'
+import Movies from '../components/highestRated/Movies'
 import { useState, useEffect } from 'react'
 import ResponsiveCarousel from '../components/ResponsiveCarousel';
 import Rating from '../components/Rating';
+import RandomMovie from '../components/randomMovie/RandomMovie';
 export const getServerSideProps = async () => {
 
   // New movies
@@ -156,7 +157,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
     <>
       {/* Main slider */}
       <div className='py-5 pt-16' id="new">
-        <div className="my-5 flex flex-col items-center">
+        <div className="my-5 px-5 flex flex-col items-center">
           <h2 className="text-3xl mb-1 text-center">New Movies</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
@@ -201,7 +202,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
 
       {ratedMovies.length !== 0 && domLoaded ?
         <div className="py-5 shadow-sm" id="myRatings">
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center px-5">
             <h2 className="text-3xl mb-1 text-center">Movies you have rated</h2>
             <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
           </div>
@@ -212,7 +213,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
       {/* Recommended movies */}
 
       <div className="py-5" id="recommended">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center px-5">
           <h2 className="text-3xl mb-1 text-center">Recommended movies for you</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
@@ -223,11 +224,20 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
         ) : ""}
       </div>
       <div className="py-5" id="highestRated">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center px-5">
           <h2 className="text-3xl mb-1 text-center">Top 10 highest rated movies</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
         <Movies movies={highestRatedMovies.length === 0 ? highestRatedMoviesList.slice(0, 10) : highestRatedMovies.slice(0, 10)} />
+      </div>
+      <div className='relative'>
+        <div className="py-5" id="randomMovie">
+          <div className="flex flex-col items-center px-5">
+            <h2 className="text-3xl mb-1 text-center">Don't know what to watch?</h2>
+            <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
+          </div>
+          <RandomMovie close={toggleRatingPopup} user={user} />
+        </div>
       </div>
       {showRatingPopup &&
         <Rating close={toggleRatingPopup} movieId={clickedMovie} user={user} />

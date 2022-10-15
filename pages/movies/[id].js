@@ -1,6 +1,6 @@
 import React from 'react'
-import Banner from '../../components/movie/Banner';
-import Cast from '../../components/movie/Cast';
+import Banner from '../../components/moviePage/Banner';
+import Cast from '../../components/moviePage/Cast';
 
 export const getServerSideProps = async (context) => {
     const resQueriedMovie = await fetch(`${process.env.NEXT_PUBLIC_MOVIE}${context.query.id}`);

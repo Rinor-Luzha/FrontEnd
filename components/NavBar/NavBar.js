@@ -23,7 +23,7 @@ export default function NavBar({ user, setUser }) {
             <img src="/logo.png" className="justify-self-start h-12 hover:cursor-pointer lg:mr-28" />
           </Link>
         }
-        <MenuItems clickedMenu={clicked} user={user} setUser={setUser} />
+        <MenuItems clickedMenu={clicked} setClicked={setClicked} user={user} setUser={setUser} />
         <SearchBar />
         <Hamburger clickedMenu={clicked} setClickedMenu={setClicked} />
       </nav>
