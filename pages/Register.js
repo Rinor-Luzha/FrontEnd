@@ -1,9 +1,8 @@
-import React from 'react'
-import AliceCarousel from 'react-alice-carousel';
+import React, { useState } from 'react'
 import { FaRegEnvelope } from 'react-icons/fa'
 import { MdLockOutline } from 'react-icons/md'
 import Link from 'next/link'
-import { useState } from 'react'
+
 import { useRouter } from 'next/router'
 import swal from 'sweetalert';
 
@@ -21,7 +20,6 @@ export default function Register({ user }) {
         router.push("/")
     }
 
-
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
     const [email, setEmail] = useState("")
@@ -30,11 +28,9 @@ export default function Register({ user }) {
 
     const [birthDate, setBirthDate] = useState("")
 
-    const [fail, setFail] = useState(false)
-
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            login(event)
+            register(event)
         }
     }
 
@@ -48,7 +44,6 @@ export default function Register({ user }) {
                 timer: 2000,
                 buttons: false
             });
-            setFail(true)
             return
         }
 
@@ -60,7 +55,6 @@ export default function Register({ user }) {
                 timer: 2000,
                 buttons: false
             });
-            setFail(true)
             return
         }
 
@@ -72,7 +66,6 @@ export default function Register({ user }) {
                 timer: 2000,
                 buttons: false
             });
-            setFail(true)
             return
         }
 
@@ -84,7 +77,6 @@ export default function Register({ user }) {
                 timer: 2000,
                 buttons: false
             });
-            setFail(true)
             return
         }
 
@@ -97,7 +89,6 @@ export default function Register({ user }) {
                 timer: 2000,
                 buttons: false
             });
-            setFail(true)
             return
         }
 
@@ -109,7 +100,6 @@ export default function Register({ user }) {
                 timer: 2000,
                 buttons: false
             });
-            setFail(true)
             return
         }
         if (password !== passwordConf) {
@@ -120,7 +110,6 @@ export default function Register({ user }) {
                 timer: 2400,
                 buttons: false
             });
-            setFail(true)
             return
         }
 
@@ -161,7 +150,6 @@ export default function Register({ user }) {
                 icon: "error",
                 buttons: false
             });
-            setFail(true)
         }
     }
     return (
@@ -177,30 +165,29 @@ export default function Register({ user }) {
                 <div className="h-4/5 py-6 px-6 md:h-auto justify-center items-center bg-red text-white lg:w-3/5 md:rounded-b-2xl lg:rounded-tr-2xl lg:rounded-br-2xl lg:rounded-l-none lg:p-12">
                     <form onSubmit={register} className="flex flex-col items-center">
 
-                        <div className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3">
-                            <input onChange={e => { setName(e.target.value) }} type='text' name='text' placeholder='First Name' className='bg-lightgrey outline-none text-sm pl-2 text-black flex-1' />
+                        <div className="bg-lightgrey rounded-lg flex items-center m-3">
+                            <input onKeyDown={handleKeyDown} onChange={e => { setName(e.target.value) }} type='text' name='text' placeholder='First Name' className='h-9 w-52 md:w-72 lg:w-52 xl:w-72 p-2 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
 
-                        <div className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3">
-                            <input onChange={e => { setSurname(e.target.value) }} type='text' name='text' placeholder='Last Name' className='bg-lightgrey outline-none text-sm pl-2 text-black flex-1' />
+                        <div className="bg-lightgrey rounded-lg flex items-center m-3">
+                            <input onKeyDown={handleKeyDown} onChange={e => { setSurname(e.target.value) }} type='text' name='text' placeholder='Last Name' className='h-9 w-52 md:w-72 lg:w-52 xl:w-72 p-2 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
 
-                        <div className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3">
-                            <input onChange={e => { setBirthDate(e.target.value) }} max="2004-01-01" type='date' name='birthDate' className='bg-lightgrey outline-none text-sm p-2 text-grey flex-1' />
+                        <div className="bg-lightgrey rounded-lg flex items-center m-3 relative">
+                            <input onKeyDown={handleKeyDown} onChange={e => { setBirthDate(e.target.value) }} max="2004-01-01" type='date' name='birthDate' className={birthDate === '' ? 'h-9 w-52 md:w-72 lg:w-52 xl:w-72 p-2 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1 before:content-["Birthdate"] before:absolute before:left-2 before:text-grey md:before:hidden ' : 'h-9 w-52 md:w-72 lg:w-52 xl:w-72 p-2 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1'} />
                         </div>
 
-                        <div onChange={e => { setEmail(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3"><FaRegEnvelope className='text-grey m-2' />
-                            <input type='email' name='email' placeholder='E-mail' className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                        <div onChange={e => { setEmail(e.target.value) }} className="bg-lightgrey rounded-lg flex items-center m-3 relative"><FaRegEnvelope className='absolute right-0 text-grey m-2' />
+                            <input onKeyDown={handleKeyDown} type='email' name='email' placeholder='E-mail' className='h-9 w-52 md:w-72 lg:w-52 xl:w-72 p-2 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
 
-                        <div onChange={e => { setPassword(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
-                            <input type="password" placeholder="Password" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                        <div onChange={e => { setPassword(e.target.value) }} className="bg-lightgrey rounded-lg flex items-center m-3 relative"><MdLockOutline className='absolute right-0 text-grey text-xl m-2' />
+                            <input onKeyDown={handleKeyDown} type="password" placeholder="Password" required className='h-9 w-52 md:w-72 lg:w-52 xl:w-72 p-2 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
 
-                        <div onChange={e => { setPasswordConf(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
-                            <input type="password" placeholder="Confirm Password" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                        <div onChange={e => { setPasswordConf(e.target.value) }} className="bg-lightgrey rounded-lg flex items-center m-3 relative"><MdLockOutline className='absolute right-0 text-grey text-xl m-2' />
+                            <input onKeyDown={handleKeyDown} type="password" placeholder="Confirm Password" required className='h-9 w-52 md:w-72 lg:w-52 xl:w-72 p-2 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
-                        <div className={fail ? "text-red p-2 m-3 text-center text-xs" : "hidden"}>Invalid credentials!</div>
                         <button type="submit" className="border-2 border-white rounded-full px-12 py-2 mb-5 m-4 inline-block text-white font-semibold  hover:bg-white hover:text-red">Register</button>
                     </form>
                     <Link href='/login'><span className='text-sm text-white hover:cursor-pointer hover:underline'>Already have an account?</span></Link>

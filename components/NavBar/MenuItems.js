@@ -124,19 +124,16 @@ const MenuItems = ({ clickedMenu, user, setUser, setClicked }) => {
                     </Link>
                 }
             </div>
-            <div className="group hover:cursor-pointer px-5 py-4 transition-all duration-300 md:block shadow-sm md:shadow-none">
-                <Link href={user !== null ? "/account" : "/login"} >
-                    <li onClick={() => { setClicked(false) }} className="flex items-center gap-2">
-                        <p className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 transition-all duration-300 group-hover:text-red after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
-                            My Account
-                        </p>
+            <div className="group hover:cursor-pointer hover:text-red px-5 py-4 transition-all duration-300">
+                {user !== null ?
+                    <li onClick={logout} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
+                        Log Out
                     </li>
-                </Link>
-            </div>
-            <div className={user === null ? "hidden" : "group hover:cursor-pointer hover:text-red px-5 py-4 transition-all duration-300"}>
-                <li onClick={logout} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
-                    Log Out
-                </li>
+                    :
+                    <Link href="/login" className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
+                        Log In
+                    </Link>
+                }
             </div>
         </ul>
     )

@@ -23,7 +23,6 @@ export default function Login({ user, setUser }) {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [fail, setFail] = useState(false)
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -80,9 +79,15 @@ export default function Login({ user, setUser }) {
                     })
 
             } else {
+                swal({
+                    title: "Login failed!",
+                    text: "Account doesnt exist, or you entered wrong email or password!",
+                    icon: "warning",
+                    timer: 2300,
+                    buttons: false
+                })
                 setEmail("")
                 setPassword("")
-                setFail(true)
             }
         } catch (error) {
             console.log(error)
@@ -93,9 +98,9 @@ export default function Login({ user, setUser }) {
                 icon: "warning",
                 timer: 2300,
                 buttons: false
-            })         
+            })
         }
-        
+
     }
     return (
         <div className="flex flex-col items-center justify-center w-screen h-full pt-12 flex-1 px-20 text-center bg-white md:w-100 md:h-full md:p-32">
@@ -112,14 +117,13 @@ export default function Login({ user, setUser }) {
                         <h2 className="text-2xl lg:text-3xl font-bold text-red mb-1">Log In to your Account</h2>
                         <div className="border-t-2 w-14 border-t-red inline-block mb-2"></div>
                     </div>
-                    <form className="flex flex-col items-center m-0" onSubmit={login}>
-                        <div className="bg-lightgrey rounded-lg w-72 p-2 flex items-center m-0"><FaRegEnvelope className='text-grey m-2' />
-                            <input onKeyDown={handleKeyDown} onChange={e => { setEmail(e.target.value) }} type='email' name='email' placeholder='E-mail' id='email' required className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                    <form className="flex flex-col items-center" onSubmit={login}>
+                        <div className="bg-lightgrey flex items-center rounded-lg"><FaRegEnvelope className='text-grey m-2' />
+                            <input onKeyDown={handleKeyDown} onChange={e => { setEmail(e.target.value) }} type='email' name='email' placeholder='E-mail' id='email' required className='p-2 py-2.5 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1 ' />
                         </div>
-                        <div className="bg-lightgrey rounded-lg w-72 p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
-                            <input onKeyDown={handleKeyDown} onChange={e => { setPassword(e.target.value) }} type='password' name='password' placeholder='Password' className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                        <div className="bg-lightgrey rounded-lg m-5 flex items-center"><MdLockOutline className='text-grey m-2' />
+                            <input onKeyDown={handleKeyDown} onChange={e => { setPassword(e.target.value) }} type='password' name='password' placeholder='Password' className='p-2 py-2.5 rounded-lg bg-lightgrey  outline-none text-sm text-black flex-1' />
                         </div>
-                        <div className={fail ? "text-red p-2 m-3 text-center text-xs" : "hidden"}>Invalid credentials!</div>
                         <button type="submit" className="border-2 border-red text-red rounded-full m-6 px-12 py-2 inline-block font-semibold hover:bg-red hover:text-white">Log In</button>
                     </form>
                 </div>
