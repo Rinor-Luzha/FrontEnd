@@ -119,10 +119,10 @@ export default function Login({ user, setUser }) {
                     </div>
                     <form className="flex flex-col items-center" onSubmit={login}>
                         <div className="bg-lightgrey flex items-center rounded-lg"><FaRegEnvelope className='text-grey m-2' />
-                            <input onKeyDown={handleKeyDown} onChange={e => { setEmail(e.target.value) }} type='email' name='email' placeholder='E-mail' id='email' required className='p-2 py-2.5 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1 ' />
+                            <input onKeyDown={handleKeyDown} onChange={e => { setEmail(e.target.value) }} type='email' name='email' placeholder='E-mail' id='email' required className='p-2 py-2.5 rounded-lg w-60 bg-lightgrey outline-none text-sm text-black flex-1 ' />
                         </div>
                         <div className="bg-lightgrey rounded-lg m-5 flex items-center"><MdLockOutline className='text-grey m-2' />
-                            <input onKeyDown={handleKeyDown} onChange={e => { setPassword(e.target.value) }} type='password' name='password' placeholder='Password' className='p-2 py-2.5 rounded-lg bg-lightgrey  outline-none text-sm text-black flex-1' />
+                            <input onKeyDown={handleKeyDown} onChange={e => { setPassword(e.target.value) }} type='password' name='password' placeholder='Password' className='p-2 py-2.5 rounded-lg bg-lightgrey w-60 outline-none text-sm text-black flex-1' />
                         </div>
                         <button type="submit" className="border-2 border-red text-red rounded-full m-6 px-12 py-2 inline-block font-semibold hover:bg-red hover:text-white">Log In</button>
                     </form>
