@@ -2,28 +2,11 @@ import React from 'react'
 import Cast from './Cast'
 const MovieInfo = ({ editedMovie, queriedMovie }) => {
     // Animate rating elephant based on rating nr
-    let ratingImg = ""
-    if (queriedMovie.rating <= 2) {
-        ratingImg = "/ratings/20.png";
-    } else if (queriedMovie.rating <= 4) {
-        ratingImg = "/ratings/40.png";
-
-    } else if (queriedMovie.rating <= 5) {
-        ratingImg = "/ratings/50.png";
-
-    } else if (queriedMovie.rating <= 7) {
-        ratingImg = "/ratings/70.png";
-
-    } else if (queriedMovie.rating <= 8) {
-        ratingImg = "/ratings/80.png";
-
-    } else if (queriedMovie.rating <= 9) {
-        ratingImg = "/ratings/90.png";
-
-    } else if (queriedMovie.rating <= 9.5) {
-        ratingImg = "/ratings/95.png";
+    let ratingImgSrc = ""
+    if (editedMovie.length !== 0) {
+        ratingImgSrc = getRatingImgSrc(editedMovie.rating)
     } else {
-        ratingImg = "/ratings/100.png";
+        ratingImgSrc = getRatingImgSrc(queriedMovie.rating)
     }
 
     return (
@@ -71,7 +54,7 @@ const MovieInfo = ({ editedMovie, queriedMovie }) => {
                         }
                     </div>
                     <div>
-                        <img src={ratingImg} alt="rating" className="w-14 " />
+                        <img src={ratingImgSrc} alt="rating" className="w-14 " />
                     </div>
                 </div>
             </div>
@@ -80,3 +63,29 @@ const MovieInfo = ({ editedMovie, queriedMovie }) => {
 }
 
 export default MovieInfo
+
+// Get the rating elephant img source from the rating number
+const getRatingImgSrc = (rating) => {
+    if (rating <= 2) {
+        return "/ratings/20.png"
+    }
+    if (rating <= 4) {
+        return "/ratings/40.png"
+    }
+    if (rating <= 5) {
+        return "/ratings/50.png"
+    }
+    if (rating <= 7) {
+        return "/ratings/70.png"
+    }
+    if (rating <= 8) {
+        return "/ratings/80.png"
+    }
+    if (rating <= 9) {
+        return "/ratings/90.png"
+    }
+    if (rating <= 9.5) {
+        return "/ratings/95.png"
+    }
+    return "/ratings/100.png"
+}

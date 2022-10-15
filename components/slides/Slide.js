@@ -106,7 +106,7 @@ const getRatingImgSrc = (rating) => {
 }
 
 const getGenreTags = (genres) => {
-    genres.map((genre, index) => {
+    return genres.map((genre, index) => {
         return <span key={index} className="select-none text-xs rounded-xl w-fit h-fit m-1 px-1 cursor-default bg-opacity-80 text-grey hover:bg-red hover:text-white border border-lightgrey transition-all duration-300">{genre}</span>
     })
 }

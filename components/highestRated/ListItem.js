@@ -79,13 +79,13 @@ const getFormatedDate = (releaseDate) => {
 }
 
 const getMovieActors = (actors) => {
-  return actors.map((actor, index) => {
+  return actors.map((unit, index) => {
     if (index === 0) {
-      return <span className="text-grey"><span key={index} className="text-sm sm:text-sm md:text-md lg:text-lg w-fit h-fit cursor-default text-black hover:bg-red hover:text-white  transition-all duration-300">{actor.name + " " + actor.surname}</span>{", "}</span>
+      return <span className="text-grey"><span key={index} className="text-sm sm:text-sm md:text-md lg:text-lg w-fit h-fit cursor-default text-black hover:bg-red hover:text-white  transition-all duration-300">{unit.actor.name + " " + unit.actor.surname}</span>{", "}</span>
     } else if (index < actors.length - 1) {
-      return <span className="text-grey"><span key={index} className="text-xs sm:text-xs md:text-sm lg:text-md w-fit h-fit cursor-default text-grey hover:bg-red hover:text-white transition-all duration-300">{actor.name + " " + actor.surname}</span>{", "}</span>
+      return <span className="text-grey"><span key={index} className="text-xs sm:text-xs md:text-sm lg:text-md w-fit h-fit cursor-default text-grey hover:bg-red hover:text-white transition-all duration-300">{unit.actor.name + " " + unit.actor.surname}</span>{", "}</span>
     }
-    return <span key={index} className="text-xs sm:text-xs md:text-sm lg:text-md w-fit h-fit cursor-default text-grey hover:bg-red hover:text-white transition-all duration-300">{actor.name + " " + actor.surname}</span>
+    return <span key={index} className="text-xs sm:text-xs md:text-sm lg:text-md w-fit h-fit cursor-default text-grey hover:bg-red hover:text-white transition-all duration-300">{unit.actor.name + " " + unit.actor.surname}</span>
   })
 }
 
