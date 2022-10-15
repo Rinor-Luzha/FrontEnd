@@ -5,14 +5,7 @@ import Rating from '../Rating'
 const Banner = ({ movie, user, changedMovieDetails, setChangedMovieDetails }) => {
     const [showRatingPopup, setShowRatingPopup] = useState(false);
 
-    // Format date
-    const year = movie.releaseDate.substring(0, 4)
-    const month = movie.releaseDate.substring(5, 7)
-    const day = movie.releaseDate.substring(8, 10)
-    const date = new Date(year, month, day)
-    const dateArray = date.toDateString().split(' ');
-    const dateFormat = dateArray[2] + ' ' + dateArray[1] + ' ' + dateArray[3];
-
+    const formatedDate = getFormatedDate(movie.releaseDate)
 
     const toggleRatingPopup = () => {
         if (user === null) {
@@ -40,7 +33,7 @@ const Banner = ({ movie, user, changedMovieDetails, setChangedMovieDetails }) =>
                     <img src={movie.img.substring(1)} alt={movie.title} className="h-104 w-80 hover:cursor-pointer hover:shadow-lg transition-all duration-500" />
                     <div className='flex justify-between text-grey'>
                         <div>
-                            {dateFormat}
+                            {formatedDate}
                         </div>
                         <div>
                             {movie.length}
@@ -63,3 +56,13 @@ const Banner = ({ movie, user, changedMovieDetails, setChangedMovieDetails }) =>
 }
 
 export default Banner
+
+const getFormatedDate = (releaseDate) => {
+    // Format date
+    const year = releaseDate.substring(0, 4)
+    const month = releaseDate.substring(5, 7)
+    const day = releaseDate.substring(8, 10)
+    const date = new Date(year, month, day)
+    const dateArray = date.toDateString().split(' ');
+    return dateArray[2] + ' ' + dateArray[1] + ' ' + dateArray[3];
+}

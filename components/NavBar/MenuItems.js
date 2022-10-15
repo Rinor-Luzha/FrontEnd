@@ -25,7 +25,6 @@ const MenuItems = ({ clickedMenu, user, setUser, setClicked }) => {
                     buttons: false
                 })
                 setUser(null)
-                router.push("/")
             } else {
                 swal({
                     title: "Error!",
@@ -131,7 +130,7 @@ const MenuItems = ({ clickedMenu, user, setUser, setClicked }) => {
                     </li>
                     :
                     <Link href="/login" className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
-                        Log In
+                        <span onClick={() => { setClicked(false) }}>Log In</span>
                     </Link>
                 }
             </div>

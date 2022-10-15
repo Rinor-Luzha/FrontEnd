@@ -17,7 +17,7 @@ export default function Login({ user, setUser }) {
             icon: "info",
             timer: 2000,
             buttons: false
-        });
+        })
         router.push("/")
     }
 
@@ -103,8 +103,7 @@ export default function Login({ user, setUser }) {
 
     }
     return (
-        <div className="flex flex-col items-center justify-center w-screen h-full pt-12 flex-1 px-20 text-center bg-white md:w-100 md:h-full md:p-32">
-
+        <div className="flex flex-col items-center justify-center w-screen lg:w-full h-full pt-12 flex-1 px-20 text-center bg-white md:w-100 md:h-full md:p-32">
             <div className="bg-white shadow-2xl flex w-screen flex-col md:max-w-2xl md:flex-col md:rounded-t-2xl lg:w-2/3 lg:flex-row lg:max-w-4xl lg:rounded-2xl">
                 <div className="h-full md:h-full lg:w-3/5 lg:p-5">
                     <div className="justify-center pt-14 lg:justify-start lg:text-left font-bold flex items-center text-xl text-black">

@@ -6,39 +6,58 @@ const Rating = (props) => {
     const [rating, setRating] = useState(null)
     const [hover, setHover] = useState(null)
     const saveRating = async (ratingNumber) => {
-        const res = await fetch(process.env.NEXT_PUBLIC_RATING, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ movieId: props.movieId, userId: props.user.id, rating: ratingNumber })
-        })
-        if (res.status === 201) {
-            swal({
-                title: "Done!",
-                text: "Rating created!",
-                icon: "success",
-                timer: 1500,
-                buttons: false
-            });
+        if (props.ratedBefore === true) {
+            const res = await fetch(process.env.NEXT_PUBLIC_RATING, {
+                method: "PUT",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ movieId: props.movieId, userId: props.user.id, rating: ratingNumber })
+            })
+            if (res.status === 200) {
+                swal({
+                    title: "Done!",
+                    text: "Rating updated!",
+                    icon: "success",
+                    timer: 1500,
+                    buttons: false
+                });
 
-        } else if (res.status === 200) {
-            swal({
-                title: "Done!",
-                text: "Rating updated!",
-                icon: "success",
-                timer: 1500,
-                buttons: false
-            });
+            } else {
+                swal("Error!", "There was an error while editing the rating!", "error");
+            }
         } else {
-            swal("Error!", "There was an error while rating the movie!", "error");
+            const res = await fetch(process.env.NEXT_PUBLIC_RATING, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ movieId: props.movieId, userId: props.user.id, rating: ratingNumber })
+            })
+            if (res.status === 201) {
+                swal({
+                    title: "Done!",
+                    text: "Rating created!",
+                    icon: "success",
+                    timer: 1500,
+                    buttons: false
+                });
+            } else if (res.status === 200) {
+                swal({
+                    title: "Done!",
+                    text: "Rating updated!",
+                    icon: "success",
+                    timer: 1500,
+                    buttons: false
+                });
+            } else {
+                swal("Error!", "There was an error while rating the movie!", "error");
+            }
         }
         props.close()
     }
-
-
-
 
     return (
         <div className="w-screen h-screen flex justify-center items-center fixed top-0 left-0 bottom-0 right-0">

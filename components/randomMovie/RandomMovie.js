@@ -32,7 +32,7 @@ const RandomMovie = ({ user, close }) => {
                 </div>
                 :
                 <div className='flex flex-col items-center justify-around'>
-                    < Banner close={close} movie={movie} user={user} />
+                    <Banner close={close} movie={movie} user={user} />
                     <p onClick={generateRandomMovie} className='absolute bottom-16 cursor-pointer px-1 text-grey hover:text-red first-letter:transition-all duration-300'>Get another movie!</p>
                 </div>
             }

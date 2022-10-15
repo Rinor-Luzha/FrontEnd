@@ -1,17 +1,7 @@
 import React from 'react'
 import GenreTags from '../moviePage/GenreTags'
 import Link from 'next/link'
-const Banner = ({ movie, user, close }) => {
-
-    // Format date
-    const year = movie.releaseDate.substring(0, 4)
-    const month = movie.releaseDate.substring(5, 7)
-    const day = movie.releaseDate.substring(8, 10)
-    const date = new Date(year, month, day)
-
-    const dateArray = date.toDateString().split(' ');
-    const dateFormat = dateArray[2] + ' ' + dateArray[1] + ' ' + dateArray[3];
-
+const Banner = ({ movie, close }) => {
     return (
         <>
             <div className="h-104 flex flex-col justify-center items-center">

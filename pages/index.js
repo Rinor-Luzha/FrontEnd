@@ -1,10 +1,10 @@
-import BigSlide from '../components/slides/BigSlide'
-import AliceCarousel from 'react-alice-carousel';
-import Movies from '../components/highestRated/Movies'
+import HighestRatedMovies from '../components/highestRated/HighestRatedMovies'
 import { useState, useEffect } from 'react'
 import ResponsiveCarousel from '../components/ResponsiveCarousel';
 import Rating from '../components/Rating';
 import RandomMovie from '../components/randomMovie/RandomMovie';
+import NewMovies from '../components/homePage/NewMovies';
+import SectionTitle from '../components/homePage/SectionTitle';
 export const getServerSideProps = async () => {
 
   // New movies
@@ -15,20 +15,20 @@ export const getServerSideProps = async () => {
   const recommendedRes = await fetch(process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES);
   const recommendedMovies = await recommendedRes.json();
 
-  const highestRes = await fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES);
-  const highestList = await highestRes.json();
+  const highestRatedRes = await fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES);
+  const highestRatedList = await highestRatedRes.json();
 
   return {
     props: {
       newMoviesList: newMovies,
       staticRecommended: recommendedMovies,
-      highestRatedMoviesList: highestList
+      staticHighestRated: highestRatedList
     }
   }
 }
 
 
-export default function Home({ newMoviesList, staticRecommended, highestRatedMoviesList, user, setUser }) {
+export default function Home({ newMoviesList, staticRecommended, staticHighestRated, user }) {
   const [domLoaded, setDomLoaded] = useState(false);
 
   // Movie lists
@@ -42,7 +42,12 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
   // Trigger for refreshing movies
   const [removedRating, setRemovedRating] = useState(false);
 
+  // Set movie id when rating movie
   const [clickedMovie, setClickedMovie] = useState(null);
+
+  // Condition for PUT instead of POST in movie rating
+  const [ratedBefore, setRatedBefore] = useState(null);
+
 
   // On DOM load get user id together with his rated movies and recommended movies for him
   useEffect(() => {
@@ -129,7 +134,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
   }, [user]);
 
 
-  const toggleRatingPopup = (id) => {
+  const toggleRatingPopup = (id, ratedBefore = false) => {
     if (user === null) {
       swal({
         title: "Please log in first!",
@@ -142,6 +147,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
     }
     setClickedMovie(id)
     setShowRatingPopup(!showRatingPopup)
+    setRatedBefore(ratedBefore)
   }
 
   const toggleRemoveRating = () => {
@@ -154,56 +160,15 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
     <>
       {/* Main slider */}
 
-      <section className='py-5 pt-16' id="new">
-        <div className="my-5 px-5 flex flex-col items-center">
-          <h2 className="text-3xl mb-1 text-center">New Movies</h2>
-          <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
-        </div>
-        <div className="w-full m-0 p-0 h-104 bg-black absolute shadow-xl"></div>
-        <AliceCarousel duration={500}
-          autoPlay={true}
-          startIndex={1}
-          infinite={true}
-          fadeOutAnimation={true}
-          mouseDragEnabled={true}
-          playButtonEnabled={true}
-          autoPlayInterval={10000}
-          touchTracking={true}
-          autoPlayActionDisabled={true}
-          renderPrevButton={() => {
-            return <p className="select-none ml-auto w-fit px-[12px] pt-[3px]  text-grey rounded-full border-2 border-grey text-4xl hover:cursor-pointer hover:bg-red hover:shadow-md hover:text-white hover:border-white transition-all">&lt;</p>
-
-          }}
-          renderNextButton={() => {
-            return <p className="select-none mr-auto w-fit px-[12px] pt-[3px]  text-grey rounded-full border-2 border-grey text-4xl hover:cursor-pointer hover:bg-red hover:shadow-md hover:text-white hover:border-white transition-all">&gt;</p>
-
-          }}>
-          {
-            newMoviesList.map(movie => {
-              const genreArray = movie.genres;
-              let genres = "";
-              genreArray.map(genre => {
-                genres += genre + ", "
-              })
-
-              return <BigSlide key={movie.id} movieId={movie.id} title={movie.title}
-                genres={genres.substring(0, genres.length - 2)}
-                img={movie.img.substring(1)}
-              />
-            }
-            )
-          }
-        </AliceCarousel>
+      <section className='py-5 pt-20' id="new">
+        <NewMovies movieList={newMoviesList} />
       </section>
 
       {/* Rated movies */}
 
       {ratedMovies.length !== 0 && domLoaded ?
         <section className="py-5 shadow-sm" id="myRatings">
-          <div className="flex flex-col items-center px-5">
-            <h2 className="text-3xl mb-1 text-center">Movies you have rated</h2>
-            <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
-          </div>
+          <SectionTitle text="Movies you have rated" />
           <ResponsiveCarousel close={toggleRatingPopup} movies={ratedMovies} rated={true} user={user} removeRating={toggleRemoveRating} />
         </section> : ""
       }
@@ -211,10 +176,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
       {/* Recommended movies */}
 
       <section className="py-5" id="recommended">
-        <div className="flex flex-col items-center px-5">
-          <h2 className="text-3xl mb-1 text-center">Recommended movies for you</h2>
-          <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
-        </div>
+        <SectionTitle text="Recommended movies for you" />
         {domLoaded ? (user === null ?
           <ResponsiveCarousel close={toggleRatingPopup} movies={staticRecommended} rated={false} removeRating={toggleRemoveRating} />
           :
@@ -225,27 +187,21 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
       {/* Highest rated movies */}
 
       <section className="py-5" id="highestRated">
-        <div className="flex flex-col items-center px-5">
-          <h2 className="text-3xl mb-1 text-center">Top 10 highest rated movies</h2>
-          <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
-        </div>
-        <Movies movies={highestRatedMovies.length === 0 ? highestRatedMoviesList.slice(0, 10) : highestRatedMovies.slice(0, 10)} />
+        <SectionTitle text="Top 10 highest rated movies" />
+        <HighestRatedMovies movies={highestRatedMovies.length === 0 ? staticHighestRated.slice(0, 10) : highestRatedMovies.slice(0, 10)} />
       </section>
 
       {/* Random movie */}
 
       <section className='relative'>
         <div className="py-5" id="randomMovie">
-          <div className="flex flex-col items-center px-5">
-            <h2 className="text-3xl mb-1 text-center">Don't know what to watch?</h2>
-            <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
-          </div>
+          <SectionTitle text="Don't know what to watch?" />
           <RandomMovie close={toggleRatingPopup} user={user} />
         </div>
       </section>
 
       {showRatingPopup &&
-        <Rating close={toggleRatingPopup} movieId={clickedMovie} user={user} />
+        <Rating close={toggleRatingPopup} movieId={clickedMovie} user={user} ratedBefore={ratedBefore} />
       }
     </>
   )

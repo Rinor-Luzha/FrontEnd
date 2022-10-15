@@ -12,6 +12,18 @@ const CommentList = ({ user, changedMovieDetails, setChangedMovieDetails, edited
         }
     }
     const postComment = async () => {
+        if (user === null) {
+            swal({
+                title: "You are not logged in!",
+                text: "You have to be logged in to post a comment!",
+                icon: "info",
+                timer: 2000,
+                buttons: false
+            })
+            addComment.current.value = ""
+            setCommentText("")
+            return
+        }
         try {
             const commentRes = await fetch(process.env.NEXT_PUBLIC_COMMENT, {
                 method: "POST",

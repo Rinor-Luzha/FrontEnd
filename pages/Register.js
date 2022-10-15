@@ -81,7 +81,6 @@ export default function Register({ user }) {
         }
 
         if (birthDate === '') {
-            console.log('here')
             swal({
                 title: "Birthday Year is required!",
                 text: "Please enter your Birthday Year!",
@@ -153,7 +152,7 @@ export default function Register({ user }) {
         }
     }
     return (
-        <div className="flex flex-col items-center justify-center w-screen h-auto pt-14 flex-1 px-20 text-center bg-white md:w-100 md:h-auto md:p-36 lg:pt-24 lg:pb-8">
+        <div className="flex flex-col items-center justify-center w-screen lg:w-full h-auto pt-14 flex-1 px-20 text-center bg-white md:w-100 md:h-auto md:p-36 lg:pt-24 lg:pb-8">
             <div className="bg-white rounded-2xl shadow-2xl flex w-screen h-auto lg:w-2/3 lg:max-w-4xl md:max-w-xl md:h-auto flex-col md:rounded-t-2xl lg:flex-row">
                 <div className="h-1/5 p-4 md:h-auto lg:w-2/5 lg:p-5 lg:py-44 text-2xl">
                     <div className="font-bold flex-col items-center text-black">

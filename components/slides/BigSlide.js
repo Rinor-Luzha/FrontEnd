@@ -11,4 +11,4 @@ export const BigSlide = (props) => {
         </div>
     )
 }
-export default BigSlide;
+export default BigSlide
