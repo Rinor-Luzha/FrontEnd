@@ -31,15 +31,16 @@ export const getServerSideProps = async () => {
 export default function Home({ newMoviesList, staticRecommended, highestRatedMoviesList, user, setUser }) {
   const [domLoaded, setDomLoaded] = useState(false);
 
+  // Movie lists
   const [ratedMovies, setRatedMovies] = useState([]);
   const [recommendedMovies, setRecommendedMovies] = useState([]);
   const [highestRatedMovies, setHighestRatedMovies] = useState([]);
 
+  // Condition to show popup
   const [showRatingPopup, setShowRatingPopup] = useState(false);
 
-
+  // Trigger for refreshing movies
   const [removedRating, setRemovedRating] = useState(false);
-
 
   const [clickedMovie, setClickedMovie] = useState(null);
 
@@ -61,7 +62,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
     }
   }, []);
 
-  //Refresh your rated, recommended and highest rated movies when you make a rating
+  // Refresh your rated, recommended and highest rated movies when you make a rating
   useEffect(() => {
     if (user !== null) {
       // Get updated highest rated movies
@@ -82,7 +83,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           setRatedMovies(movieData)
         })
     }
-  }, [showRatingPopup]);
+  }, [showRatingPopup === true]);
 
   // Refresh your rated, recommended and highest rated movies when you remove a rating
   useEffect(() => {
@@ -107,17 +108,13 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
     }
   }, [removedRating]);
 
+  // Refresh your rated and recommended movies when you log out or log in
   useEffect(() => {
     if (user !== null) {
       // Refresh you rated movies
       fetch(`${process.env.NEXT_PUBLIC_RATED_MOVIES}?id=${user.id}`).then(movies => movies.json())
         .then(movieData => {
           setRatedMovies(movieData)
-        })
-      // Get updated highest rated movies
-      fetch(process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES).then(movies => movies.json())
-        .then(movieData => {
-          setHighestRatedMovies(movieData)
         })
 
       // Get updated recommended movies
@@ -127,6 +124,7 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
         })
     } else {
       setRatedMovies([])
+      setRecommendedMovies([])
     }
   }, [user]);
 
@@ -143,7 +141,6 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
       return
     }
     setClickedMovie(id)
-    // showRatingPopup.current = !showRatingPopup.current;
     setShowRatingPopup(!showRatingPopup)
   }
 
@@ -156,7 +153,8 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
   return (
     <>
       {/* Main slider */}
-      <div className='py-5 pt-16' id="new">
+
+      <section className='py-5 pt-16' id="new">
         <div className="my-5 px-5 flex flex-col items-center">
           <h2 className="text-3xl mb-1 text-center">New Movies</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
@@ -196,23 +194,23 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
             )
           }
         </AliceCarousel>
-      </div>
+      </section>
 
       {/* Rated movies */}
 
       {ratedMovies.length !== 0 && domLoaded ?
-        <div className="py-5 shadow-sm" id="myRatings">
+        <section className="py-5 shadow-sm" id="myRatings">
           <div className="flex flex-col items-center px-5">
             <h2 className="text-3xl mb-1 text-center">Movies you have rated</h2>
             <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
           </div>
           <ResponsiveCarousel close={toggleRatingPopup} movies={ratedMovies} rated={true} user={user} removeRating={toggleRemoveRating} />
-        </div> : ""
+        </section> : ""
       }
 
       {/* Recommended movies */}
 
-      <div className="py-5" id="recommended">
+      <section className="py-5" id="recommended">
         <div className="flex flex-col items-center px-5">
           <h2 className="text-3xl mb-1 text-center">Recommended movies for you</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
@@ -222,15 +220,21 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           :
           <ResponsiveCarousel close={toggleRatingPopup} movies={recommendedMovies} rated={false} removeRating={toggleRemoveRating} />
         ) : ""}
-      </div>
-      <div className="py-5" id="highestRated">
+      </section>
+
+      {/* Highest rated movies */}
+
+      <section className="py-5" id="highestRated">
         <div className="flex flex-col items-center px-5">
           <h2 className="text-3xl mb-1 text-center">Top 10 highest rated movies</h2>
           <div className="border-b-2 border-red w-24 inline-block mt-2"></div>
         </div>
         <Movies movies={highestRatedMovies.length === 0 ? highestRatedMoviesList.slice(0, 10) : highestRatedMovies.slice(0, 10)} />
-      </div>
-      <div className='relative'>
+      </section>
+
+      {/* Random movie */}
+
+      <section className='relative'>
         <div className="py-5" id="randomMovie">
           <div className="flex flex-col items-center px-5">
             <h2 className="text-3xl mb-1 text-center">Don't know what to watch?</h2>
@@ -238,7 +242,8 @@ export default function Home({ newMoviesList, staticRecommended, highestRatedMov
           </div>
           <RandomMovie close={toggleRatingPopup} user={user} />
         </div>
-      </div>
+      </section>
+
       {showRatingPopup &&
         <Rating close={toggleRatingPopup} movieId={clickedMovie} user={user} />
       }
