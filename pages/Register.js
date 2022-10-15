@@ -135,7 +135,6 @@ export default function Register({ user }) {
             return
         }
 
-
         const resUserRegister = await fetch(process.env.NEXT_PUBLIC_REGISTER, {
             method: "POST",
             headers: {
@@ -152,6 +151,7 @@ export default function Register({ user }) {
                 title: "Good job!",
                 text: "Registered!",
                 icon: "success",
+                timer: 1500,
                 buttons: false
             });
         } else {
@@ -163,41 +163,41 @@ export default function Register({ user }) {
             });
             setFail(true)
         }
-    };
+    }
     return (
-        <div className="flex flex-col items-center justify-center w-screen h-screen flex-1 lg:py-36 px-20 text-center bg-white">
-            <div className="bg-white rounded-2xl shadow-2xl flex w-screen h-screen lg:w-2/3 lg:max-w-4xl md:max-w-xl flex-col lg:flex-row">
-                <div className="h-1/5 lg:w-2/5 lg:p-5 lg:py-48 text-2xl">
+        <div className="flex flex-col items-center justify-center w-screen h-auto pt-14 flex-1 px-20 text-center bg-white md:w-100 md:h-auto md:p-36 lg:pt-24 lg:pb-8">
+            <div className="bg-white rounded-2xl shadow-2xl flex w-screen h-auto lg:w-2/3 lg:max-w-4xl md:max-w-xl md:h-auto flex-col md:rounded-t-2xl lg:flex-row">
+                <div className="h-1/5 p-4 md:h-auto lg:w-2/5 lg:p-5 lg:py-44 text-2xl">
                     <div className="font-bold flex-col items-center text-black">
                         <img src='/logo.png' className="w-35 h-20 pt-4 lg:w-50 lg:h-40 mx-auto" />
-                        <span className="text-red pb-4">Elefanti</span>Ratings
+                        <span className="text-red">Elefanti</span>Ratings
                     </div>
                 </div>
 
-                <div className="h-full lg:w-3/5 justify-center items-center bg-red text-white rounded-tr-2xl rounded-br-2xl py-12 px-6 lg:py-24 lg:px-12">
+                <div className="h-4/5 py-6 px-6 md:h-auto justify-center items-center bg-red text-white lg:w-3/5 md:rounded-b-2xl lg:rounded-tr-2xl lg:rounded-br-2xl lg:rounded-l-none lg:p-12">
                     <form onSubmit={register} className="flex flex-col items-center">
 
-                        <div className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3">
-                            <input onChange={e => { setName(e.target.value) }} type='text' name='text' placeholder='First Name' className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                        <div className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3">
+                            <input onChange={e => { setName(e.target.value) }} type='text' name='text' placeholder='First Name' className='bg-lightgrey outline-none text-sm pl-2 text-black flex-1' />
                         </div>
 
-                        <div className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3">
-                            <input onChange={e => { setSurname(e.target.value) }} type='text' name='text' placeholder='Last Name' className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                        <div className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3">
+                            <input onChange={e => { setSurname(e.target.value) }} type='text' name='text' placeholder='Last Name' className='bg-lightgrey outline-none text-sm pl-2 text-black flex-1' />
                         </div>
 
-                        <div className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3">
-                            <input onChange={e => { setBirthDate(e.target.value) }} max="2004-01-01" type='date' name='birthDate' placeholder='Birthday Year' className='bg-lightgrey outline-none text-sm text-black flex-1' />
+                        <div className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3">
+                            <input onChange={e => { setBirthDate(e.target.value) }} max="2004-01-01" type='date' name='birthDate' className='bg-lightgrey outline-none text-sm p-2 text-grey flex-1' />
                         </div>
 
-                        <div onChange={e => { setEmail(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3"><FaRegEnvelope className='text-grey m-2' />
+                        <div onChange={e => { setEmail(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3"><FaRegEnvelope className='text-grey m-2' />
                             <input type='email' name='email' placeholder='E-mail' className='bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
 
-                        <div onChange={e => { setPassword(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
+                        <div onChange={e => { setPassword(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
                             <input type="password" placeholder="Password" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
 
-                        <div onChange={e => { setPasswordConf(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-64 lg:h-10 lg:w-80 lg:p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
+                        <div onChange={e => { setPasswordConf(e.target.value) }} className="bg-lightgrey rounded-lg h-10 w-72 md:w-80 lg:w-80 lg:p-2 flex items-center m-3"><MdLockOutline className='text-grey m-2' />
                             <input type="password" placeholder="Confirm Password" required className='bg-lightgrey outline-none text-sm text-black flex-1' />
                         </div>
                         <div className={fail ? "text-red p-2 m-3 text-center text-xs" : "hidden"}>Invalid credentials!</div>

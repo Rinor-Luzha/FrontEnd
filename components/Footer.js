@@ -10,13 +10,13 @@ function Footer() {
                 <Link href="https://www.facebook.com/" >
                     <i className="fa-brands fa-facebook text-2xl text-lightgrey hover:text-red transition-all duration-300 cursor-pointer"></i>
                 </Link>
-                <Link href="https://www.facebook.com/" >
+                <Link href="https://www.instagram.com/" >
                     <i className="fa-brands fa-instagram text-2xl text-lightgrey hover:text-red transition-all duration-300 cursor-pointer"></i>
                 </Link>
-                <Link href="https://www.facebook.com/" >
+                <Link href="https://twitter.com/" >
                     <i className="fa-brands fa-twitter text-2xl text-lightgrey hover:text-red transition-all duration-300 cursor-pointer"></i>
                 </Link>
-                <Link href="https://www.facebook.com/" >
+                <Link href="https://www.linkedin.com/" >
                     <i className="fa-brands fa-linkedin text-2xl text-lightgrey hover:text-red transition-all duration-300 cursor-pointer"></i>
                 </Link>
             </div>
