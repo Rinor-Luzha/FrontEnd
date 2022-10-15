@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import GenreTags from './GenreTags'
 import Rating from '../Rating'
 
-const Banner = ({ movie, user }) => {
+const Banner = ({ movie, user, changedMovieDetails, setChangedMovieDetails }) => {
     const [showRatingPopup, setShowRatingPopup] = useState(false);
 
     // Format date
@@ -10,7 +10,6 @@ const Banner = ({ movie, user }) => {
     const month = movie.releaseDate.substring(5, 7)
     const day = movie.releaseDate.substring(8, 10)
     const date = new Date(year, month, day)
-
     const dateArray = date.toDateString().split(' ');
     const dateFormat = dateArray[2] + ' ' + dateArray[1] + ' ' + dateArray[3];
 
@@ -27,6 +26,10 @@ const Banner = ({ movie, user }) => {
             return
         }
         setShowRatingPopup(!showRatingPopup)
+        if (showRatingPopup === true) {
+            // Trigger movie change after rating
+            setChangedMovieDetails(!changedMovieDetails)
+        }
     }
     return (
         <>

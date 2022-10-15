@@ -61,7 +61,7 @@ const MenuItems = ({ clickedMenu, user, setUser, setClicked }) => {
                             Home
                         </li>
                     </Scroll> :
-                    <Link href="/" scroll={false} >
+                    <Link href="/">
                         <li onClick={() => { setClicked(false) }} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Home
                         </li>
@@ -75,7 +75,7 @@ const MenuItems = ({ clickedMenu, user, setUser, setClicked }) => {
                             My Ratings
                         </li>
                     </Scroll> :
-                    <Link href="/" scroll={false} >
+                    <Link href="/">
                         <li onClick={() => { setClicked(false) }} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             My Ratings
                         </li>
@@ -89,7 +89,7 @@ const MenuItems = ({ clickedMenu, user, setUser, setClicked }) => {
                             Recommended
                         </li>
                     </Scroll> :
-                    <Link href="/" scroll={false} >
+                    <Link href="/">
                         <li onClick={() => { setClicked(false) }} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Recommended
                         </li>
@@ -103,7 +103,7 @@ const MenuItems = ({ clickedMenu, user, setUser, setClicked }) => {
                             Highest Rated
                         </li>
                     </Scroll> :
-                    <Link href="/" scroll={false} >
+                    <Link href="/">
                         <li onClick={() => { setClicked(false) }} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Highest Rated
                         </li>
@@ -117,7 +117,7 @@ const MenuItems = ({ clickedMenu, user, setUser, setClicked }) => {
                             Random Movie
                         </li>
                     </Scroll> :
-                    <Link href="/" scroll={false} >
+                    <Link href="/">
                         <li onClick={() => { setClicked(false) }} className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
                             Random Movie
                         </li>
