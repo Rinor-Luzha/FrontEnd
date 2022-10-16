@@ -1,7 +1,21 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
+module.exports = {
+  output: 'standalone',
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  env: {
+    NEW_MOVIES: process.env.NEW_MOVIES,
+    NEXT_PUBLIC_RECOMMENDED_MOVIES: process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES,
+    NEXT_PUBLIC_HIGHEST_RATED_MOVIES: process.env.NEXT_PUBLIC_HIGHEST_RATED_MOVIES,
+    NEXT_PUBLIC_RATED_MOVIES: process.env.NEXT_PUBLIC_RATED_MOVIES,
+    NEXT_PUBLIC_RANDOM: process.env.NEXT_PUBLIC_RANDOM,
+    NEXT_PUBLIC_RATING: process.env.NEXT_PUBLIC_RATING,
+    NEXT_PUBLIC_USER: process.env.NEXT_PUBLIC_USER,
+    NEXT_PUBLIC_LOGIN: process.env.NEXT_PUBLIC_LOGIN,
+    NEXT_PUBLIC_LOGOUT: process.env.NEXT_PUBLIC_LOGOUT,
+    NEXT_PUBLIC_REGISTER: process.env.NEXT_PUBLIC_REGISTER,
+    NEXT_PUBLIC_COMMENT: process.env.NEXT_PUBLIC_COMMENT,
+    NEXT_PUBLIC_SEARCH: process.env.NEXT_PUBLIC_SEARCH,
+    NEXT_PUBLIC_MOVIE: process.env.NEXT_PUBLIC_MOVIE,
+  },
 }
-
-module.exports = nextConfig
