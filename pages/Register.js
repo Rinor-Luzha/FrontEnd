@@ -91,7 +91,7 @@ export default function Register({ user }) {
             return
         }
 
-        if (birthDate > '2014-01-01') {
+        if (birthDate > '2006-01-01') {
             swal({
                 title: "Too young!",
                 text: "You have to be 16 years or older!",
@@ -173,7 +173,7 @@ export default function Register({ user }) {
                         </div>
 
                         <div className="bg-lightgrey rounded-lg flex items-center m-3 relative">
-                            <input onKeyDown={handleKeyDown} onChange={e => { setBirthDate(e.target.value) }} max="2004-01-01" type='date' name='birthDate' className={birthDate === '' ? 'h-9 w-52 md:w-72 lg:w-52 xl:w-72 p-2 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1 before:content-["Birthdate"] before:absolute before:left-2 before:text-grey md:before:hidden ' : 'h-9 w-52 md:w-72 lg:w-52 xl:w-72 p-2 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1'} />
+                            <input onKeyDown={handleKeyDown} onChange={e => { setBirthDate(e.target.value) }} type='date' name='birthDate' className={birthDate === '' ? 'h-9 w-52 md:w-72 lg:w-52 xl:w-72 p-2 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1 before:content-["Birthdate"] before:absolute before:left-2 before:text-grey md:before:hidden ' : 'h-9 w-52 md:w-72 lg:w-52 xl:w-72 p-2 rounded-lg bg-lightgrey outline-none text-sm text-black flex-1'} />
                         </div>
 
                         <div onChange={e => { setEmail(e.target.value) }} className="bg-lightgrey rounded-lg flex items-center m-3 relative"><FaRegEnvelope className='absolute right-0 text-grey m-2' />
