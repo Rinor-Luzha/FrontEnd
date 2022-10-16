@@ -11,7 +11,7 @@ export const getServerSideProps = async () => {
   const resNew = await fetch(process.env.NEW_MOVIES);
   const newMovies = await resNew.json();
 
-  // Generate recommended movies in case user is not logged in
+  // Generate recommended movies if the user is not logged in
   const recommendedRes = await fetch(process.env.NEXT_PUBLIC_RECOMMENDED_MOVIES);
   const recommendedMovies = await recommendedRes.json();
 
