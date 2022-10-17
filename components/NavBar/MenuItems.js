@@ -43,14 +43,12 @@ const MenuItems = ({ clickedMenu, user, setUser, setClicked }) => {
             {
                 user &&
                 <div className="group hover:cursor-pointer px-5 py-4 transition-all duration-300 shadow-sm md:hidden">
-                    <Link href="/account">
-                        <li className="flex items-center gap-2">
-                            <i className="fas fa-user p-2 border-2 border-grey text-grey group-hover:text-red group-hover:border-red transition-all duration-300 rounded-full color-grey md:hidden"></i>
-                            <p className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 transition-all duration-300 group-hover:text-red after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
-                                {user.name} {user.surname}
-                            </p>
-                        </li>
-                    </Link>
+                    <li className="flex items-center gap-2">
+                        <i className="fas fa-user p-2 border-2 border-grey text-grey group-hover:text-red group-hover:border-red transition-all duration-300 rounded-full color-grey md:hidden"></i>
+                        <p className="relative w-fit after:absolute after:content-[''] after:w-full after:h-0.5 after:top-full after:left-0 transition-all duration-300 group-hover:text-red after:bg-red after:scale-x-0 after:origin-center after:transition-all after:duration-500 group-hover:after:scale-100 group-hover:after:origin-center">
+                            {user.name} {user.surname}
+                        </p>
+                    </li>
                 </div>
             }
             <div className="group hover:cursor-pointer hover:text-red px-5 py-4 transition-all duration-300 shadow-sm md:shadow-none md:block">

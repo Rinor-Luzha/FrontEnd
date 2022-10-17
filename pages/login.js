@@ -72,7 +72,7 @@ export default function Login({ user, setUser }) {
                         });
                         setTimeout(() => {
                             setUser(userData)
-                        }, 1500)
+                        }, 1800)
                     })
                     .catch(e => {
                         console.log(e)
